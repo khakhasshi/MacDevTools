@@ -5,7 +5,7 @@
 <h1 align="center">MacShellTool</h1>
 
 <p align="center">
-  <strong>🛠️ macOS 终端工具集 - 一站式系统维护与开发辅助工具</strong>
+  <strong>🛠️ macOS Terminal Toolkit - All-in-One System Maintenance & Development Tools</strong>
 </p>
 
 <p align="center">
@@ -17,93 +17,91 @@
 </p>
 
 <p align="center">
-  <b>👤 作者 / Author:</b> 江景哲 (JIANGJINGZHE)<br>
-  <b>📧 邮箱 / Email:</b> <a href="mailto:contact@jiangjingzhe.com">contact@jiangjingzhe.com</a><br>
-  <b>💬 微信 / WeChat:</b> jiangjingzhe_2004
+  <b>👤 Author:</b> JIANGJINGZHE (江景哲)<br>
+  <b>📧 Email:</b> <a href="mailto:contact@jiangjingzhe.com">contact@jiangjingzhe.com</a><br>
+  <b>💬 WeChat:</b> jiangjingzhe_2004
 </p>
 
 <p align="center">
-  <a href="./README_EN.md">English</a> | 简体中文
+  English | <a href="./README_CN.md">简体中文</a>
 </p>
 
 <p align="center">
-  <a href="#-功能特性">功能特性</a> •
-  <a href="#-安装">安装</a> •
-  <a href="#-使用方法">使用方法</a> •
-  <a href="#-工具列表">工具列表</a> •
-  <a href="#-截图">截图</a> •
-  <a href="#-贡献">贡献</a>
+  <a href="#-features">Features</a> •
+  <a href="#-installation">Installation</a> •
+  <a href="#-usage">Usage</a> •
+  <a href="#-tools">Tools</a> •
+  <a href="#-screenshots">Screenshots</a> •
+  <a href="#-contributing">Contributing</a>
 </p>
 
 ---
 
-## ✨ 功能特性
+## ✨ Features
 
-- 🎨 **精美 TUI 界面** - ASCII Art Logo + 彩色交互式菜单
-- ⚡ **一键清理** - 快速清理所有开发环境缓存
-- 🔧 **模块化设计** - 每个工具独立运行，互不干扰
-- 🌐 **全局命令** - 任意位置输入 `tool` 即可启动
-- 📦 **多包管理器支持** - Homebrew、pip、npm、pnpm、yarn 等
-- 🔍 **网络诊断** - 全面的网络连接检查
-- 🔌 **端口管理** - 快速查看和释放被占用的端口
+- 🎨 **Beautiful TUI Interface** - ASCII Art Logo + Colorful Interactive Menu
+- ⚡ **One-Click Cleanup** - Quickly clean all development environment caches
+- 🔧 **Modular Design** - Each tool runs independently
+- 🌐 **Global Command** - Type `tool` anywhere to launch
+- 📦 **Multi Package Manager Support** - Homebrew, pip, npm, pnpm, yarn, etc.
+- 🔍 **Network Diagnostics** - Comprehensive network connection checks
+- 🔌 **Port Management** - Quickly view and release occupied ports
 
-## 📦 支持的工具
+## 📦 Supported Tools
 
-| 类别 | 工具 | 描述 |
+| Category | Tool | Description |
 |:---:|:---|:---|
-| 🍺 | Homebrew | 清理下载缓存、旧版本软件包 |
-| 🐍 | pip | 清理 pip 缓存、wheel 缓存 |
-| 📦 | npm/pnpm/yarn | 清理 Node.js 包管理器缓存 |
-| 🔨 | Xcode | 清理 DerivedData、模拟器、构建缓存 |
-| 🐳 | Docker | 清理镜像、容器、卷、构建缓存 |
-| 🐹 | Go | 清理模块缓存、构建缓存 |
-| 🦀 | Cargo | 清理 Rust 注册表、Git 缓存 |
-| 💎 | Ruby Gems | 清理 gem 缓存、旧版本 |
-| 🌐 | Network | 网络连接诊断、DNS 检查 |
-| 🔌 | Port | 端口占用查看与进程管理 |
+| 🍺 | Homebrew | Clean download cache, old versions |
+| 🐍 | pip | Clean pip cache, wheel cache |
+| 📦 | npm/pnpm/yarn | Clean Node.js package manager caches |
+| 🔨 | Xcode | Clean DerivedData, simulators, build cache |
+| 🐳 | Docker | Clean images, containers, volumes, build cache |
+| 🐹 | Go | Clean module cache, build cache |
+| 🦀 | Cargo | Clean Rust registry, Git cache |
+| 💎 | Ruby Gems | Clean gem cache, old versions |
+| 🌐 | Network | Network diagnostics, DNS check |
+| 🔌 | Port | Port usage viewer & process manager |
 
-## 🚀 安装
+## 🚀 Installation
 
-### 快速安装
+### Install via Homebrew (Recommended)
 
 ```bash
-# 克隆仓库到 ShellTools 目录
-git clone https://github.com/yourusername/MacShellTool.git ~/ShellTools
+brew install khakhasshi/tap/shelltools
+```
 
-# 添加到 PATH（自动写入 .zshrc）
+Or:
+
+```bash
+brew tap khakhasshi/tap
+brew install shelltools
+```
+
+After installation, run `tool` to start.
+
+### Manual Install
+
+```bash
+# Clone repository to ShellTools directory
+git clone https://github.com/khakhasshi/MacShellTool.git ~/ShellTools
+
+# Add to PATH (auto-write to .zshrc)
 echo 'export PATH="$HOME/ShellTools:$PATH"' >> ~/.zshrc
 source ~/.zshrc
 
-# 验证安装
+# Verify installation
 tool help
 ```
 
-### 手动安装
+## 📖 Usage
 
-```bash
-# 1. 创建目录
-mkdir -p ~/ShellTools
-
-# 2. 下载所有脚本到 ~/ShellTools
-
-# 3. 添加执行权限
-chmod +x ~/ShellTools/*.sh
-chmod +x ~/ShellTools/tool
-
-# 4. 添加到 PATH
-echo 'export PATH="$HOME/ShellTools:$PATH"' >> ~/.zshrc
-source ~/.zshrc
-```
-
-## 📖 使用方法
-
-### 交互式菜单
+### Interactive Menu
 
 ```bash
 tool
 ```
 
-启动后将显示精美的 TUI 界面，使用数字键选择对应功能：
+Launch to see a beautiful TUI interface, use number keys to select functions:
 
 ```
     __  ___           _____ __         ____  ______            __
@@ -113,223 +111,224 @@ tool
 /_/  /_/\__,_/\___//____/_/ /_/\___/_/_/   /_/  \____/\____/_/   
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              🛠️  终端工具集 v1.0  |  macOS
+              🛠️  Terminal Toolkit v1.0  |  macOS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  📦 缓存清理
-     1) Homebrew 缓存清理
-     2) pip 缓存清理
-     3) npm/pnpm/yarn 缓存清理
+  📦 Cache Cleanup
+     1) Homebrew Cache Cleanup
+     2) pip Cache Cleanup
+     3) npm/pnpm/yarn Cache Cleanup
      ...
 ```
 
-### 命令行模式
+### Command Line Mode
 
-直接执行特定功能，无需进入菜单：
+Execute specific functions directly without entering the menu:
 
 ```bash
-# 缓存清理
-tool brew          # 清理 Homebrew 缓存
-tool pip           # 清理 pip 缓存
-tool node          # 清理 npm/pnpm/yarn 缓存
-tool xcode         # 清理 Xcode 缓存
-tool docker        # 清理 Docker 缓存
-tool go            # 清理 Go 模块缓存
-tool cargo         # 清理 Cargo 缓存
-tool gem           # 清理 Ruby Gems 缓存
+# Cache Cleanup
+tool brew          # Clean Homebrew cache
+tool pip           # Clean pip cache
+tool node          # Clean npm/pnpm/yarn cache
+tool xcode         # Clean Xcode cache
+tool docker        # Clean Docker cache
+tool go            # Clean Go module cache
+tool cargo         # Clean Cargo cache
+tool gem           # Clean Ruby Gems cache
 
-# 系统工具
-tool network       # 网络连接检查
-tool port 3000     # 查看 3000 端口占用
-tool port -k 8080  # 杀死占用 8080 端口的进程
-tool port -l       # 列出所有监听端口
-tool port -c       # 检查常用开发端口
+# System Tools
+tool network       # Network connection check
+tool port 3000     # View port 3000 usage
+tool port -k 8080  # Kill process using port 8080
+tool port -l       # List all listening ports
+tool port -c       # Check common dev ports
 
-# 快捷操作
-tool all           # 一键清理所有缓存
-tool help          # 显示帮助信息
+# Quick Actions
+tool all           # One-click clean all caches
+tool help          # Show help
 ```
 
-## 🔧 工具详情
+## 🔧 Tool Details
 
-### 1. Homebrew 缓存清理 (`clean_brew_cache.sh`)
+### 1. Homebrew Cache Cleanup (`clean_brew_cache.sh`)
 
 ```bash
 tool brew
 ```
 
-**功能：**
-- ✅ 清理下载缓存
-- ✅ 删除旧版本软件包
-- ✅ 深度清理所有缓存文件
-- ✅ 显示清理前后空间对比
+**Features:**
+- ✅ Clean download cache
+- ✅ Remove old software versions
+- ✅ Deep clean all cache files
+- ✅ Show before/after space comparison
 
 ---
 
-### 2. pip 缓存清理 (`clean_pip_cache.sh`)
+### 2. pip Cache Cleanup (`clean_pip_cache.sh`)
 
 ```bash
 tool pip
 ```
 
-**功能：**
-- ✅ 清理 pip 下载缓存
-- ✅ 清理 wheel 缓存
-- ✅ 清理 http 缓存
-- ✅ 支持 macOS 特定路径
+**Features:**
+- ✅ Clean pip download cache
+- ✅ Clean wheel cache
+- ✅ Clean http cache
+- ✅ Support macOS specific paths
 
 ---
 
-### 3. Node.js 缓存清理 (`clean_node_cache.sh`)
+### 3. Node.js Cache Cleanup (`clean_node_cache.sh`)
 
 ```bash
 tool node
 ```
 
-**功能：**
+**Features:**
 - ✅ npm cache clean
 - ✅ pnpm store prune
 - ✅ yarn cache clean
-- ✅ 清理 /tmp 临时文件
+- ✅ Clean /tmp temporary files
 
 ---
 
-### 4. Xcode 缓存清理 (`clean_xcode_cache.sh`)
+### 4. Xcode Cache Cleanup (`clean_xcode_cache.sh`)
 
 ```bash
 tool xcode
 ```
 
-**功能：**
-- ✅ 清理 DerivedData（编译产物）
-- ✅ 清理模块缓存
-- ✅ 清理 LLVM/SPM 缓存
-- ✅ 删除不可用的模拟器
-- ✅ 清理 Playground 缓存
-- ⚠️ 可选清理 DeviceSupport/Archives
+**Features:**
+- ✅ Clean DerivedData (build artifacts)
+- ✅ Clean module cache
+- ✅ Clean LLVM/SPM cache
+- ✅ Delete unavailable simulators
+- ✅ Clean Playground cache
+- ⚠️ Optional: Clean DeviceSupport/Archives
 
 ---
 
-### 5. Docker 缓存清理 (`clean_docker_cache.sh`)
+### 5. Docker Cache Cleanup (`clean_docker_cache.sh`)
 
 ```bash
 tool docker
 ```
 
-**功能：**
-- ✅ 删除已停止的容器
-- ✅ 删除悬空镜像
-- ✅ 删除未使用的卷和网络
-- ✅ 清理构建缓存
-- ⚠️ 可选深度清理（删除所有未使用资源）
+**Features:**
+- ✅ Remove stopped containers
+- ✅ Remove dangling images
+- ✅ Remove unused volumes and networks
+- ✅ Clean build cache
+- ⚠️ Optional: Deep clean (remove all unused resources)
 
 ---
 
-### 6. Go 缓存清理 (`clean_go_cache.sh`)
+### 6. Go Cache Cleanup (`clean_go_cache.sh`)
 
 ```bash
 tool go
 ```
 
-**功能：**
-- ✅ 清理构建缓存
-- ✅ 清理测试缓存
-- ✅ 清理模糊测试缓存
-- ⚠️ 可选清理模块缓存
+**Features:**
+- ✅ Clean build cache
+- ✅ Clean test cache
+- ✅ Clean fuzz test cache
+- ⚠️ Optional: Clean module cache
 
 ---
 
-### 7. Cargo 缓存清理 (`clean_cargo_cache.sh`)
+### 7. Cargo Cache Cleanup (`clean_cargo_cache.sh`)
 
 ```bash
 tool cargo
 ```
 
-**功能：**
-- ✅ 清理注册表缓存
-- ✅ 清理 Git checkouts
-- ✅ 清理 Git 数据库
-- ⚠️ 可选清理所有 target 目录
+**Features:**
+- ✅ Clean registry cache
+- ✅ Clean Git checkouts
+- ✅ Clean Git database
+- ⚠️ Optional: Clean all target directories
 
 ---
 
-### 8. Ruby Gems 缓存清理 (`clean_gem_cache.sh`)
+### 8. Ruby Gems Cache Cleanup (`clean_gem_cache.sh`)
 
 ```bash
 tool gem
 ```
 
-**功能：**
-- ✅ 清理 gem 缓存
-- ✅ 删除旧版本 gems
-- ✅ 清理 Bundler 缓存
-- ✅ 支持 rbenv/rvm
-- ⚠️ 可选清理 CocoaPods 缓存
+**Features:**
+- ✅ Clean gem cache
+- ✅ Remove old gem versions
+- ✅ Clean Bundler cache
+- ✅ Support rbenv/rvm
+- ⚠️ Optional: Clean CocoaPods cache
 
 ---
 
-### 9. 网络连接检查 (`check_network.sh`)
+### 9. Network Connection Check (`check_network.sh`)
 
 ```bash
 tool network
 ```
 
-**功能：**
-- ✅ 检查网络接口状态
-- ✅ 测试网关连接
-- ✅ DNS 解析测试
-- ✅ Ping 测试（Google/Cloudflare/阿里）
-- ✅ HTTP/HTTPS 连接测试
-- ✅ 开发服务检查（npm/PyPI/Docker Hub）
-- ✅ 本地端口监听检查
-- ⚠️ 可选网络速度测试
+**Features:**
+- ✅ Check network interface status
+- ✅ Test gateway connection
+- ✅ DNS resolution test
+- ✅ Ping test (Google/Cloudflare/Alibaba)
+- ✅ HTTP/HTTPS connection test
+- ✅ Dev service check (npm/PyPI/Docker Hub)
+- ✅ Local port listening check
+- ⚠️ Optional: Network speed test
 
 ---
 
-### 10. 端口占用查杀 (`port_killer.sh`)
+### 10. Port Killer (`port_killer.sh`)
 
 ```bash
-tool port [选项] [端口号]
+tool port [options] [port]
 ```
 
-**选项：**
-| 选项 | 描述 |
+**Options:**
+| Option | Description |
 |:---|:---|
-| `tool port 3000` | 查看 3000 端口占用详情 |
-| `tool port -k 8080` | 直接杀死占用 8080 的进程 |
-| `tool port -l` | 列出所有监听端口 |
-| `tool port -c` | 显示常用开发端口状态 |
+| `tool port 3000` | View port 3000 usage details |
+| `tool port -k 8080` | Kill process using port 8080 |
+| `tool port -l` | List all listening ports |
+| `tool port -c` | Show common dev port status |
 
-**功能：**
-- ✅ 查看端口占用详情（进程名、PID、CPU、内存）
-- ✅ 一键杀死占用进程
-- ✅ 支持强制终止
-- ✅ 常用端口快速检查
+**Features:**
+- ✅ View port usage details (process name, PID, CPU, memory)
+- ✅ One-click kill process
+- ✅ Support force terminate
+- ✅ Quick check common ports
 
-## 📁 目录结构
+## 📁 Directory Structure
 
 ```
 ~/ShellTools/
-├── tool                    # 主入口（全局命令）
-├── clean_brew_cache.sh     # Homebrew 缓存清理
-├── clean_pip_cache.sh      # pip 缓存清理
-├── clean_node_cache.sh     # Node.js 缓存清理
-├── clean_xcode_cache.sh    # Xcode 缓存清理
-├── clean_docker_cache.sh   # Docker 缓存清理
-├── clean_go_cache.sh       # Go 缓存清理
-├── clean_cargo_cache.sh    # Cargo 缓存清理
-├── clean_gem_cache.sh      # Ruby Gems 缓存清理
-├── check_network.sh        # 网络连接检查
-├── port_killer.sh          # 端口占用查杀
-└── README.md               # 说明文档
+├── tool                    # Main entry (global command)
+├── clean_brew_cache.sh     # Homebrew cache cleanup
+├── clean_pip_cache.sh      # pip cache cleanup
+├── clean_node_cache.sh     # Node.js cache cleanup
+├── clean_xcode_cache.sh    # Xcode cache cleanup
+├── clean_docker_cache.sh   # Docker cache cleanup
+├── clean_go_cache.sh       # Go cache cleanup
+├── clean_cargo_cache.sh    # Cargo cache cleanup
+├── clean_gem_cache.sh      # Ruby Gems cache cleanup
+├── check_network.sh        # Network connection check
+├── port_killer.sh          # Port killer
+├── README.md               # Chinese documentation
+└── README_EN.md            # English documentation
 ```
 
-## 🖼️ 截图
+## 🖼️ Screenshots
 
 <details>
-<summary>点击展开截图</summary>
+<summary>Click to expand screenshots</summary>
 
-### 主菜单
+### Main Menu
 ```
     __  ___           _____ __         ____  ______            __
    /  |/  /___ ______/ ___// /_  ___  / / / /_  __/___  ____  / /
@@ -338,91 +337,154 @@ tool port [选项] [端口号]
 /_/  /_/\__,_/\___//____/_/ /_/\___/_/_/   /_/  \____/\____/_/   
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              🛠️  终端工具集 v1.0  |  macOS
+              🛠️  Terminal Toolkit v1.0  |  macOS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  📦 缓存清理
-     1) Homebrew 缓存清理
-     2) pip 缓存清理
-     3) npm/pnpm/yarn 缓存清理
-     4) Xcode 缓存清理
-     5) Docker 缓存清理
-     6) Go 模块缓存清理
-     7) Cargo (Rust) 缓存清理
-     8) Ruby Gems 缓存清理
+  📦 Cache Cleanup
+     1) Homebrew Cache Cleanup
+     2) pip Cache Cleanup
+     3) npm/pnpm/yarn Cache Cleanup
+     4) Xcode Cache Cleanup
+     5) Docker Cache Cleanup
+     6) Go Cache Cleanup
+     7) Cargo Cache Cleanup
+     8) Ruby Gems Cache Cleanup
 
-  🔧 系统工具
-     9) 网络连接检查
-     10) 端口占用查杀
+  🔧 System Tools
+     9) Network Connection Check
+     10) Port Killer
 
-  ⚡ 快捷操作
-     a) 一键清理所有缓存
-     l) 列出所有监听端口
-     c) 检查常用端口
+  ⚡ Quick Actions
+     a) One-Click Clean All
+     l) List All Listening Ports
+     c) Check Common Ports
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     h) 帮助    q) 退出
+     h) Help    q) Quit
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-### 端口检查
+### Network Check
 ```
-🔌 常用开发端口检查
+🌐 Network Connection Check Tool
+===================
 
-端口     服务               状态       进程
-─────────────────────────────────────────────────
-22       SSH                ⚪ 空闲
-80       HTTP               ⚪ 空闲
-443      HTTPS              ⚪ 空闲
-3000     React/Node Dev     🟢 占用    node
-3306     MySQL              🟢 占用    mysqld
-5432     PostgreSQL         ⚪ 空闲
-6379     Redis              🟢 占用    redis-server
-8080     Alt HTTP/Tomcat    ⚪ 空闲
+📡 Network Interface Status:
+   ✓ Active Interface: en0
+   ✓ Local IP: 192.168.1.100
+
+🚪 Gateway Connection:
+   Gateway: 192.168.1.1
+   ✓ Gateway reachable
+
+🔍 DNS Resolution:
+   ✓ google.com → 142.250.xx.xx
+   ✓ baidu.com → 220.181.xx.xx
+   ✓ github.com → 20.205.xx.xx
+
+🌍 Internet Connection:
+   ✓ Google DNS (8.8.8.8): 25ms
+   ✓ Cloudflare (1.1.1.1): 18ms
+   ✓ Alibaba DNS (223.5.5.5): 12ms
+```
+
+### Port Killer
+```
+🔌 Port Killer Tool
+
+🔍 Checking port 3000
+
+⚠ Port 3000 is occupied
+
+COMMAND   PID   USER   FD   TYPE   DEVICE   SIZE/OFF   NODE   NAME
+node      1234  user   23u  IPv4   0x...    0t0        TCP    *:3000 (LISTEN)
+
+Process Details:
+   PID: 1234
+   Name: node
+   User: user
+   CPU:  2.5%
+   Memory: 1.2%
+   Command: node /path/to/server.js
+
+Kill this process? (y/N):
 ```
 
 </details>
 
-## ⚠️ 注意事项
+## ❓ FAQ
 
-1. **首次使用** - 建议先运行 `tool` 查看菜单，熟悉各功能
-2. **缓存清理** - 清理后首次编译/安装可能较慢（需重新下载）
-3. **Xcode** - 清理前请确保没有正在进行的编译任务
-4. **Docker** - 深度清理会删除所有未使用的镜像
-5. **端口查杀** - 杀死系统进程可能需要 sudo 权限
+### Q: How to update MacShellTool?
 
-## 🤝 贡献
+```bash
+cd ~/ShellTools
+git pull origin main
+```
 
-欢迎提交 Issue 和 Pull Request！
+### Q: How to add custom tools?
 
-1. Fork 本仓库
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 提交 Pull Request
+1. Create a new `.sh` file in `~/ShellTools/`
+2. Add execute permission: `chmod +x your_script.sh`
+3. Edit the `tool` file to add menu options
 
-### 贡献指南
+### Q: Some tools require sudo?
 
-- 保持代码风格一致
-- 添加适当的注释
-- 更新 README 文档
-- 测试脚本在 macOS 上的兼容性
+Some system-level operations require administrator privileges. The script will prompt when needed.
 
-## 📄 许可证
+### Q: How to uninstall?
 
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情
+```bash
+# Remove directory
+rm -rf ~/ShellTools
 
-## 🙏 致谢
+# Remove PATH config (edit .zshrc to remove related lines)
+nano ~/.zshrc
+```
 
-- 感谢所有开源工具的开发者
-- 图标来自 [Icons8](https://icons8.com)
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork this repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+```
+MIT License
+
+Copyright (c) 2026 JIANGJINGZHE (江景哲)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
 
 ---
 
 <p align="center">
-  <sub>Made with ❤️ for macOS developers</sub>
+  Made with ❤️ by <a href="mailto:contact@jiangjingzhe.com">JIANGJINGZHE</a>
 </p>
 
 <p align="center">
-  <a href="#top">⬆️ 回到顶部</a>
+  <a href="#macshelltool">⬆️ Back to Top</a>
 </p>
