@@ -59,6 +59,8 @@
 | 🐹 | Go | 清理模块缓存、构建缓存 |
 | 🦀 | Cargo | 清理 Rust 注册表、Git 缓存 |
 | 💎 | Ruby Gems | 清理 gem 缓存、旧版本 |
+| 🎮 | Steam | 清理 Steam 下载 / app / http 缓存 |
+| 🌐 | DNS Lookup | 查询域名的 NS IPv4 |
 | 🌐 | Network | 网络连接诊断、DNS 检查 |
 | 🔌 | Port | 端口占用查看与进程管理 |
 
@@ -132,9 +134,11 @@ tool pip           # 清理 pip 缓存
 tool node          # 清理 npm/pnpm/yarn 缓存
 tool xcode         # 清理 Xcode 缓存
 tool docker        # 清理 Docker 缓存
+tool steam         # 清理 Steam 下载缓存
 tool go            # 清理 Go 模块缓存
 tool cargo         # 清理 Cargo 缓存
 tool gem           # 清理 Ruby Gems 缓存
+tool dns example.com  # 查询域名 NS IPv4
 
 # 系统工具
 tool network       # 网络连接检查
@@ -266,7 +270,34 @@ tool gem
 
 ---
 
-### 9. 网络连接检查 (`check_network.sh`)
+### 9. Steam 下载缓存清理 (`clean_steam_cache.sh`)
+
+```bash
+tool steam
+```
+
+**功能：**
+- ✅ 清理 Steam 下载缓存
+- ✅ 清理 app/http/depot 缓存
+- ✅ 删除 partial 下载标记
+- ⚠️ 建议清理前先退出 Steam 客户端
+
+---
+
+### 10. DNS NS IPv4 查询 (`dns_lookup.sh`)
+
+```bash
+tool dns example.com
+```
+
+**功能：**
+- ✅ 列出域名的 NS 记录
+- ✅ 解析每个 NS 的 IPv4（如有则显示 IPv6）
+- ⚠️ 依赖 `dig`（macOS 默认自带）
+
+---
+
+### 11. 网络连接检查 (`check_network.sh`)
 
 ```bash
 tool network
@@ -284,7 +315,7 @@ tool network
 
 ---
 
-### 10. 端口占用查杀 (`port_killer.sh`)
+### 12. 端口占用查杀 (`port_killer.sh`)
 
 ```bash
 tool port [选项] [端口号]
@@ -317,6 +348,8 @@ tool port [选项] [端口号]
 ├── clean_go_cache.sh       # Go 缓存清理
 ├── clean_cargo_cache.sh    # Cargo 缓存清理
 ├── clean_gem_cache.sh      # Ruby Gems 缓存清理
+├── clean_steam_cache.sh    # Steam 下载缓存清理
+├── dns_lookup.sh           # 域名 NS IPv4 查询
 ├── check_network.sh        # 网络连接检查
 ├── port_killer.sh          # 端口占用查杀
 ├── README.md               # 英文文档
@@ -349,10 +382,12 @@ tool port [选项] [端口号]
      6) Go 模块缓存清理
      7) Cargo (Rust) 缓存清理
      8) Ruby Gems 缓存清理
+     9) Steam 下载缓存清理
 
   🔧 系统工具
-     9) 网络连接检查
-     10) 端口占用查杀
+     10) 网络连接检查
+     11) DNS NS IPv4 查询
+     12) 端口占用查杀
 
   ⚡ 快捷操作
      a) 一键清理所有缓存

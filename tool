@@ -72,10 +72,12 @@ show_menu() {
     echo -e "     ${TEAL}6)${NC} ${WHITE}Go Module Cache Cleanup${NC}"
     echo -e "     ${TEAL}7)${NC} ${WHITE}Cargo (Rust) Cache Cleanup${NC}"
     echo -e "     ${TEAL}8)${NC} ${WHITE}Ruby Gems Cache Cleanup${NC}"
+    echo -e "     ${TEAL}9)${NC} ${WHITE}Steam Download Cache Cleanup${NC}"
     echo ""
     echo -e "${PINK}${BOLD}  🔧 System Tools${NC}"
-    echo -e "     ${TEAL}9)${NC} ${WHITE}Network Connection Check${NC}"
-    echo -e "     ${TEAL}10)${NC} ${WHITE}Port Usage Killer${NC}"
+    echo -e "     ${TEAL}10)${NC} ${WHITE}Network Connection Check${NC}"
+    echo -e "     ${TEAL}11)${NC} ${WHITE}DNS Nameserver IPv4 Lookup${NC}"
+    echo -e "     ${TEAL}12)${NC} ${WHITE}Port Usage Killer${NC}"
     echo ""
     echo -e "${YELLOW}${BOLD}  ⚡ Quick Actions${NC}"
     echo -e "     ${TEAL}a)${NC} ${WHITE}Clean All Caches${NC}"
@@ -194,10 +196,12 @@ show_help() {
     echo -e "  ${CYAN}tool node${NC}         Clean npm/pnpm/yarn cache"
     echo -e "  ${CYAN}tool xcode${NC}        Clean Xcode cache"
     echo -e "  ${CYAN}tool docker${NC}       Clean Docker cache"
+    echo -e "  ${CYAN}tool steam${NC}        Clean Steam download cache"
     echo -e "  ${CYAN}tool go${NC}           Clean Go cache"
     echo -e "  ${CYAN}tool cargo${NC}        Clean Cargo cache"
     echo -e "  ${CYAN}tool gem${NC}          Clean Ruby Gems cache"
     echo -e "  ${CYAN}tool network${NC}      Network connection check"
+    echo -e "  ${CYAN}tool dns <domain>${NC} Lookup domain nameserver IPv4"
     echo -e "  ${CYAN}tool port [port]${NC}  Port usage killer"
     echo -e "  ${CYAN}tool all${NC}          Clean all caches"
     echo -e "  ${CYAN}tool help${NC}         Show help"
@@ -222,6 +226,13 @@ cli_mode() {
             ;;
         docker)
             bash "$TOOL_DIR/clean_docker_cache.sh"
+            ;;
+        steam)
+            bash "$TOOL_DIR/clean_steam_cache.sh"
+            ;;
+        dns)
+            shift
+            bash "$TOOL_DIR/dns_lookup.sh" "$@"
             ;;
         go)
             bash "$TOOL_DIR/clean_go_cache.sh"
@@ -309,9 +320,24 @@ interactive_mode() {
                 run_script "clean_gem_cache.sh"
                 ;;
             9)
-                run_script "check_network.sh"
+                run_script "clean_steam_cache.sh"
                 ;;
             10)
+                run_script "check_network.sh"
+                ;;
+            11)
+                echo ""
+                read -p "Enter domain to lookup (leave empty to input interactively): " domain
+                echo ""
+                if [ -n "$domain" ]; then
+                    bash "$TOOL_DIR/dns_lookup.sh" "$domain"
+                else
+                    bash "$TOOL_DIR/dns_lookup.sh"
+                fi
+                echo ""
+                read -p "Press Enter to return to menu..."
+                ;;
+            12)
                 echo ""
                 read -p "Enter port number (or press Enter for interactive mode): " port
                 if [ -n "$port" ]; then

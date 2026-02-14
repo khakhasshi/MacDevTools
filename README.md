@@ -59,6 +59,8 @@
 | 🐹 | Go | Clean module cache, build cache |
 | 🦀 | Cargo | Clean Rust registry, Git cache |
 | 💎 | Ruby Gems | Clean gem cache, old versions |
+| 🎮 | Steam | Clean Steam download/app/http cache |
+| 🌐 | DNS Lookup | Resolve domain nameserver IPv4 |
 | 🌐 | Network | Network diagnostics, DNS check |
 | 🔌 | Port | Port usage viewer & process manager |
 
@@ -132,9 +134,11 @@ tool pip           # Clean pip cache
 tool node          # Clean npm/pnpm/yarn cache
 tool xcode         # Clean Xcode cache
 tool docker        # Clean Docker cache
+tool steam         # Clean Steam download cache
 tool go            # Clean Go module cache
 tool cargo         # Clean Cargo cache
 tool gem           # Clean Ruby Gems cache
+tool dns example.com  # Lookup domain NS IPv4
 
 # System Tools
 tool network       # Network connection check
@@ -266,7 +270,34 @@ tool gem
 
 ---
 
-### 9. Network Connection Check (`check_network.sh`)
+### 9. Steam Download Cache Cleanup (`clean_steam_cache.sh`)
+
+```bash
+tool steam
+```
+
+**Features:**
+- ✅ Clean Steam download cache
+- ✅ Clean app/http/depot caches
+- ✅ Remove partial download markers
+- ⚠️ Recommend quitting Steam before cleaning
+
+---
+
+### 10. DNS Nameserver Lookup (`dns_lookup.sh`)
+
+```bash
+tool dns example.com
+```
+
+**Features:**
+- ✅ List NS records for a domain
+- ✅ Resolve each nameserver's IPv4 (and show IPv6 if available)
+- ⚠️ Requires `dig` (macOS has it by default)
+
+---
+
+### 11. Network Connection Check (`check_network.sh`)
 
 ```bash
 tool network
@@ -284,7 +315,7 @@ tool network
 
 ---
 
-### 10. Port Killer (`port_killer.sh`)
+### 12. Port Killer (`port_killer.sh`)
 
 ```bash
 tool port [options] [port]
@@ -316,11 +347,13 @@ tool port [options] [port]
 ├── clean_docker_cache.sh   # Docker cache cleanup
 ├── clean_go_cache.sh       # Go cache cleanup
 ├── clean_cargo_cache.sh    # Cargo cache cleanup
-├── clean_gem_cache.sh      # Ruby Gems cache cleanup
-├── check_network.sh        # Network connection check
-├── port_killer.sh          # Port killer
-├── README.md               # English documentation
-└── README_CN.md            # Chinese documentation
+├── clean_gem_cache.sh     # Ruby Gems cache cleanup
+├── clean_steam_cache.sh   # Steam download cache cleanup
+├── dns_lookup.sh          # DNS nameserver IPv4 lookup
+├── check_network.sh       # Network connection check
+├── port_killer.sh         # Port killer
+├── README.md              # English documentation
+└── README_CN.md           # Chinese documentation
 ```
 
 ## 🖼️ Screenshots
@@ -349,10 +382,12 @@ tool port [options] [port]
      6) Go Cache Cleanup
      7) Cargo Cache Cleanup
      8) Ruby Gems Cache Cleanup
+     9) Steam Download Cache Cleanup
 
   🔧 System Tools
-     9) Network Connection Check
-     10) Port Killer
+     10) Network Connection Check
+     11) DNS Nameserver Lookup
+     12) Port Killer
 
   ⚡ Quick Actions
      a) One-Click Clean All
