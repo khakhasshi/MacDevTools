@@ -11,7 +11,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/platform-macOS-blue?style=flat-square&logo=apple" alt="Platform">
   <img src="https://img.shields.io/badge/shell-bash-green?style=flat-square&logo=gnu-bash" alt="Shell">
-  <img src="https://img.shields.io/badge/version-1.0.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.1.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/license-MIT-purple?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square" alt="PRs Welcome">
 </p>
@@ -70,14 +70,14 @@
 ### 通过 Homebrew 安装（推荐）
 
 ```bash
-brew install khakhasshi/tap/shelltools
+brew install khakhasshi/tap/macdevtools
 ```
 
 或者：
 
 ```bash
 brew tap khakhasshi/tap
-brew install shelltools
+brew install macdevtools
 ```
 
 安装完成后，运行 `tool` 即可启动。
@@ -114,7 +114,7 @@ tool
   /_/  /_/\__,_/\___/_____/\___/|___//_/  \____/\____/_/____/  
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              🛠️  终端工具集 v1.0  |  macOS
+              🛠️  终端工具集 v1.1  |  macOS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   📦 缓存清理
@@ -386,7 +386,7 @@ tool port [选项] [端口号]
   /_/  /_/\__,_/\___/_____/\___/|___//_/  \____/\____/_/____/  
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              🛠️  终端工具集 v1.0  |  macOS
+              🛠️  终端工具集 v1.1  |  macOS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   📦 缓存清理

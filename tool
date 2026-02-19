@@ -76,7 +76,7 @@ show_logo() {
     done
 
     echo -e "${GRAY}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${WHITE}${BOLD}              🛠️  Terminal Toolkit v1.0  |  macOS${NC}"
+    echo -e "${WHITE}${BOLD}              🛠️  Terminal Toolkit v1.1  |  macOS${NC}"
     echo -e "${GRAY}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     echo ""
 }

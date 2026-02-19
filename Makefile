@@ -10,7 +10,7 @@ SCRIPTS = clean_brew_cache.sh clean_pip_cache.sh clean_node_cache.sh \
 .PHONY: install uninstall
 
 install:
-	@echo "Installing MacShellTool..."
+	@echo "Installing MacDevTools..."
 	@mkdir -p $(BINDIR)
 	@mkdir -p $(LIBDIR)
 	@cp $(SCRIPTS) $(LIBDIR)/
@@ -20,7 +20,7 @@ install:
 	@echo "✓ Installed to $(BINDIR)/tool"
 
 uninstall:
-	@echo "Uninstalling MacShellTool..."
+	@echo "Uninstalling MacDevTools..."
 	@rm -f $(BINDIR)/tool
 	@rm -rf $(LIBDIR)
 	@echo "✓ Uninstalled"

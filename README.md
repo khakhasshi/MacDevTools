@@ -11,7 +11,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/platform-macOS-blue?style=flat-square&logo=apple" alt="Platform">
   <img src="https://img.shields.io/badge/shell-bash-green?style=flat-square&logo=gnu-bash" alt="Shell">
-  <img src="https://img.shields.io/badge/version-1.0.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.1.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/license-MIT-purple?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square" alt="PRs Welcome">
 </p>
@@ -70,14 +70,14 @@
 ### Install via Homebrew (Recommended)
 
 ```bash
-brew install khakhasshi/tap/shelltools
+brew install khakhasshi/tap/macdevtools
 ```
 
 Or:
 
 ```bash
 brew tap khakhasshi/tap
-brew install shelltools
+brew install macdevtools
 ```
 
 After installation, run `tool` to start.
@@ -114,7 +114,7 @@ Launch to see a beautiful TUI interface, use number keys to select functions:
   /_/  /_/\__,_/\___/_____/\___/|___//_/  \____/\____/_/____/  
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              🛠️  Terminal Toolkit v1.0  |  macOS
+              🛠️  Terminal Toolkit v1.1  |  macOS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   📦 Cache Cleanup
@@ -386,7 +386,7 @@ tool port [options] [port]
   /_/  /_/\__,_/\___/_____/\___/|___//_/  \____/\____/_/____/  
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              🛠️  Terminal Toolkit v1.0  |  macOS
+              🛠️  Terminal Toolkit v1.1  |  macOS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   📦 Cache Cleanup
