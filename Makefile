@@ -3,8 +3,9 @@ BINDIR ?= $(PREFIX)/bin
 LIBDIR ?= $(PREFIX)/lib/shelltools
 
 SCRIPTS = clean_brew_cache.sh clean_pip_cache.sh clean_node_cache.sh \
-          clean_xcode_cache.sh clean_docker_cache.sh clean_go_cache.sh \
-          clean_cargo_cache.sh clean_gem_cache.sh check_network.sh port_killer.sh
+		  clean_xcode_cache.sh clean_docker_cache.sh clean_go_cache.sh \
+		  clean_cargo_cache.sh clean_gem_cache.sh clean_steam_cache.sh \
+		  clean_appletv_cache.sh check_network.sh port_killer.sh dns_lookup.sh
 
 .PHONY: install uninstall
 
