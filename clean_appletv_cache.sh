@@ -1,9 +1,15 @@
 #!/bin/bash
 
-# Apple TV App Download Cache Cleanup (macOS)
+# Apple TV App Download Cache Cleanup (macOS only)
 # Safely clears Apple TV app caches and temporary download data without touching your media library.
 
 set -e
+
+# This script is macOS-only (Apple TV app does not exist on Linux)
+if [[ "$(uname -s)" != "Darwin" ]]; then
+    echo "⚠️  Apple TV app is macOS-only. Skipping on this platform."
+    exit 0
+fi
 
 APP_CONTAINER="$HOME/Library/Containers/com.apple.TV/Data/Library"
 CACHE_DIR="$APP_CONTAINER/Caches"

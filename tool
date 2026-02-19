@@ -20,6 +20,9 @@ find_scripts_dir() {
         "${base%/bin}/libexec"
         "/usr/local/lib/shelltools"
         "/opt/homebrew/lib/shelltools"
+        "/usr/lib/shelltools"
+        "/usr/share/shelltools"
+        "/opt/macdevtools/lib/shelltools"
     )
     for dir in "${candidates[@]}"; do
         if [ -f "$dir/clean_brew_cache.sh" ]; then
@@ -31,6 +34,9 @@ find_scripts_dir() {
 }
 
 TOOL_DIR="$(find_scripts_dir "$TOOL_DIR")"
+
+# Platform detection
+PLATFORM="$(uname -s)"   # Darwin | Linux
 
 # Color definitions
 RED='\033[0;31m'
@@ -76,24 +82,33 @@ show_logo() {
     done
 
     echo -e "${GRAY}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${WHITE}${BOLD}              🛠️  Terminal Toolkit v1.1  |  macOS${NC}"
+    if [[ "$(uname -s)" == "Darwin" ]]; then
+        echo -e "${WHITE}${BOLD}              🛠️  Terminal Toolkit v1.1  |  macOS${NC}"
+    else
+        echo -e "${WHITE}${BOLD}              🛠️  Terminal Toolkit v1.1  |  Linux${NC}"
+    fi
     echo -e "${GRAY}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     echo ""
 }
 
 # Show main menu
 show_menu() {
+    local macos_tag=""
+    if [[ "$PLATFORM" != "Darwin" ]]; then
+        macos_tag=" ${GRAY}(macOS only)${NC}"
+    fi
+
     echo -e "${ORANGE}${BOLD}  📦 Cache Cleanup${NC}"
     echo -e "     ${TEAL}1)${NC} ${WHITE}Homebrew Cache Cleanup${NC}"
     echo -e "     ${TEAL}2)${NC} ${WHITE}pip Cache Cleanup${NC}"
     echo -e "     ${TEAL}3)${NC} ${WHITE}npm/pnpm/yarn Cache Cleanup${NC}"
-    echo -e "     ${TEAL}4)${NC} ${WHITE}Xcode Cache Cleanup${NC}"
+    echo -e "     ${TEAL}4)${NC} ${WHITE}Xcode Cache Cleanup${macos_tag}"
     echo -e "     ${TEAL}5)${NC} ${WHITE}Docker Cache Cleanup${NC}"
     echo -e "     ${TEAL}6)${NC} ${WHITE}Go Module Cache Cleanup${NC}"
     echo -e "     ${TEAL}7)${NC} ${WHITE}Cargo (Rust) Cache Cleanup${NC}"
     echo -e "     ${TEAL}8)${NC} ${WHITE}Ruby Gems Cache Cleanup${NC}"
     echo -e "     ${TEAL}9)${NC} ${WHITE}Steam Download Cache Cleanup${NC}"
-    echo -e "     ${TEAL}10)${NC} ${WHITE}Apple TV Cache Cleanup${NC}"
+    echo -e "     ${TEAL}10)${NC} ${WHITE}Apple TV Cache Cleanup${macos_tag}"
     echo ""
     echo -e "${PINK}${BOLD}  🔧 System Tools${NC}"
     echo -e "     ${TEAL}11)${NC} ${WHITE}Network Connection Check${NC}"
@@ -191,11 +206,13 @@ clean_all() {
         rm -rf "$CARGO_REGISTRY/src"/* 2>/dev/null || true
     fi
     
-    # Xcode DerivedData
-    DERIVED_DATA="$HOME/Library/Developer/Xcode/DerivedData"
-    if [ -d "$DERIVED_DATA" ]; then
-        echo -e "\n${YELLOW}[8/8] Cleaning Xcode DerivedData...${NC}"
-        rm -rf "$DERIVED_DATA"/* 2>/dev/null || true
+    # Xcode DerivedData (macOS only)
+    if [[ "$(uname -s)" == "Darwin" ]]; then
+        DERIVED_DATA="$HOME/Library/Developer/Xcode/DerivedData"
+        if [ -d "$DERIVED_DATA" ]; then
+            echo -e "\n${YELLOW}[8/8] Cleaning Xcode DerivedData...${NC}"
+            rm -rf "$DERIVED_DATA"/* 2>/dev/null || true
+        fi
     fi
     
     echo ""
@@ -215,10 +232,10 @@ show_help() {
     echo -e "  ${CYAN}tool brew${NC}         Clean Homebrew cache"
     echo -e "  ${CYAN}tool pip${NC}          Clean pip cache"
     echo -e "  ${CYAN}tool node${NC}         Clean npm/pnpm/yarn cache"
-    echo -e "  ${CYAN}tool xcode${NC}        Clean Xcode cache"
+    echo -e "  ${CYAN}tool xcode${NC}        Clean Xcode cache ${GRAY}(macOS only)${NC}"
     echo -e "  ${CYAN}tool docker${NC}       Clean Docker cache"
     echo -e "  ${CYAN}tool steam${NC}        Clean Steam download cache"
-    echo -e "  ${CYAN}tool appletv${NC}      Clean Apple TV cache"
+    echo -e "  ${CYAN}tool appletv${NC}      Clean Apple TV cache ${GRAY}(macOS only)${NC}"
     echo -e "  ${CYAN}tool go${NC}           Clean Go cache"
     echo -e "  ${CYAN}tool cargo${NC}        Clean Cargo cache"
     echo -e "  ${CYAN}tool gem${NC}          Clean Ruby Gems cache"

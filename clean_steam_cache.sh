@@ -1,11 +1,26 @@
-#!/bin/bash
+ #!/bin/bash
 
 # Steam Download Cache Cleanup Script
-# Cleans Steam download/app/http/depot caches on macOS
+# Cleans Steam download/app/http/depot caches on macOS and Linux
 
 set -e
 
-STEAM_DIR="$HOME/Library/Application Support/Steam"
+# Detect platform and locate Steam directory
+if [[ "$(uname -s)" == "Darwin" ]]; then
+    STEAM_DIR="$HOME/Library/Application Support/Steam"
+else
+    # Linux: try common Steam paths in order
+    if [ -d "$HOME/.steam/steam" ]; then
+        STEAM_DIR="$HOME/.steam/steam"
+    elif [ -d "$HOME/.local/share/Steam" ]; then
+        STEAM_DIR="$HOME/.local/share/Steam"
+    elif [ -d "$HOME/snap/steam/common/.steam/steam" ]; then
+        STEAM_DIR="$HOME/snap/steam/common/.steam/steam"
+    else
+        STEAM_DIR="$HOME/.steam/steam"   # default guess, will fail at dir check below
+    fi
+fi
+
 DOWNLOADING_DIR="$STEAM_DIR/steamapps/downloading"
 APP_CACHE="$STEAM_DIR/appcache"
 HTTP_CACHE="$STEAM_DIR/httpcache"
@@ -14,10 +29,18 @@ LOGS_DIR="$STEAM_DIR/logs"
 
 printf "\n🕹️  Steam Download Cache Cleanup\n"
 printf "===============================\n\n"
+echo "   Steam directory: $STEAM_DIR"
+echo ""
 
 # Ensure Steam is installed
 if [ ! -d "$STEAM_DIR" ]; then
     echo "❌ Steam directory not found at: $STEAM_DIR"
+    if [[ "$(uname -s)" != "Darwin" ]]; then
+        echo "   Common Linux paths tried:"
+        echo "     ~/.steam/steam"
+        echo "     ~/.local/share/Steam"
+        echo "     ~/snap/steam/common/.steam/steam"
+    fi
     echo "   Please ensure Steam is installed for this user."
     exit 1
 fi
