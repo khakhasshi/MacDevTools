@@ -12,6 +12,26 @@ while [ -h "$SCRIPT_PATH" ]; do
 done
 TOOL_DIR="$(cd -P "$(dirname "$SCRIPT_PATH")" >/dev/null 2>&1 && pwd)"
 
+# Locate scripts if not co-located with tool (handles Homebrew/system install)
+find_scripts_dir() {
+    local base="$1"
+    local candidates=(
+        "$base"
+        "${base%/bin}/libexec"
+        "/usr/local/lib/shelltools"
+        "/opt/homebrew/lib/shelltools"
+    )
+    for dir in "${candidates[@]}"; do
+        if [ -f "$dir/clean_brew_cache.sh" ]; then
+            echo "$dir"
+            return
+        fi
+    done
+    echo "$base"
+}
+
+TOOL_DIR="$(find_scripts_dir "$TOOL_DIR")"
+
 # Color definitions
 RED='\033[0;31m'
 GREEN='\033[0;32m'
