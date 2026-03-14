@@ -132,6 +132,7 @@ show_menu() {
     echo -e "     ${TEAL}11)${NC} ${WHITE}Network Connection Check${NC}"
     echo -e "     ${TEAL}12)${NC} ${WHITE}DNS Nameserver IPv4 Lookup${NC}"
     echo -e "     ${TEAL}13)${NC} ${WHITE}Port Usage Killer${NC}"
+    echo -e "     ${TEAL}14)${NC} ${WHITE}Busy Build Simulator${NC}"
     echo ""
     echo -e "${YELLOW}${BOLD}  ⚡ Quick Actions${NC}"
     echo -e "     ${TEAL}a)${NC} ${WHITE}Clean All Caches${NC}"
@@ -260,6 +261,7 @@ show_help() {
     echo -e "  ${CYAN}tool network${NC}      Network connection check"
     echo -e "  ${CYAN}tool dns <domain>${NC} Lookup domain nameserver IPv4"
     echo -e "  ${CYAN}tool port [port]${NC}  Port usage killer"
+    echo -e "  ${CYAN}tool busy [seconds]${NC} Fake busy compile/build logs"
     echo -e "  ${CYAN}tool all${NC}          Clean all caches"
     echo -e "  ${CYAN}tool help${NC}         Show help"
     echo ""
@@ -310,6 +312,10 @@ cli_mode() {
             shift
             bash "$TOOL_DIR/port_killer.sh" "$@"
             ;;
+        busy|fakebuild|work)
+            shift
+            bash "$TOOL_DIR/fake_busy_build.sh" "$@"
+            ;;
         all)
             clean_all
             ;;
@@ -330,6 +336,7 @@ cli_mode() {
             echo "  gem       Clean Ruby Gems cache"
             echo "  network   Network connection check"
             echo "  port      Port usage killer"
+            echo "  busy      Fake busy compile/build logs"
             echo "  all       Clean all caches"
             echo "  help      Show help"
             echo ""
@@ -407,6 +414,17 @@ interactive_mode() {
                     bash "$TOOL_DIR/port_killer.sh" "$port"
                 else
                     bash "$TOOL_DIR/port_killer.sh"
+                fi
+                echo ""
+                read -p "Press Enter to return to menu..."
+                ;;
+            14)
+                echo ""
+                read -p "How many seconds to simulate? (default 45): " secs
+                if [ -n "$secs" ]; then
+                    bash "$TOOL_DIR/fake_busy_build.sh" build "$secs"
+                else
+                    bash "$TOOL_DIR/fake_busy_build.sh"
                 fi
                 echo ""
                 read -p "Press Enter to return to menu..."

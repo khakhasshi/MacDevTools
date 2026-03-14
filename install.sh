@@ -58,10 +58,11 @@ install_files() {
     cp check_network.sh "$dst/"
     cp port_killer.sh "$dst/"
     cp dns_lookup.sh "$dst/"
+    cp fake_busy_build.sh "$dst/"
     chmod +x "$dst"/*.sh
 }
 
-install_files "$LIBDIR" 2>/dev/null || { sudo cp clean_*.sh check_network.sh port_killer.sh dns_lookup.sh "$LIBDIR/"; sudo chmod +x "$LIBDIR"/*.sh; }
+install_files "$LIBDIR" 2>/dev/null || { sudo cp clean_*.sh check_network.sh port_killer.sh dns_lookup.sh fake_busy_build.sh "$LIBDIR/"; sudo chmod +x "$LIBDIR"/*.sh; }
 
 # Install launcher (tool resolves script dir dynamically at runtime)
 TOOL_LAUNCHER="$BINDIR/tool"
