@@ -101,9 +101,9 @@ show_logo() {
 
     echo -e "${GRAY}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     if [[ "$PLATFORM" == "Darwin" ]]; then
-        echo -e "${WHITE}${BOLD}              🛠️  Terminal Toolkit v1.1  |  macOS${NC}"
+        echo -e "${WHITE}${BOLD}              🛠️  Terminal Toolkit v1.2  |  macOS${NC}"
     else
-        echo -e "${WHITE}${BOLD}              🛠️  Terminal Toolkit v1.1  |  Linux${NC}"
+        echo -e "${WHITE}${BOLD}              🛠️  Terminal Toolkit v1.2  |  Linux${NC}"
     fi
     echo -e "${GRAY}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     echo ""
@@ -127,12 +127,18 @@ show_menu() {
     echo -e "     ${TEAL}8)${NC} ${WHITE}Ruby Gems Cache Cleanup${NC}"
     echo -e "     ${TEAL}9)${NC} ${WHITE}Steam Download Cache Cleanup${NC}"
     echo -e "     ${TEAL}10)${NC} ${WHITE}Apple TV Cache Cleanup${macos_tag}"
+    echo -e "     ${TEAL}11)${NC} ${WHITE}Maven Local Repository Cleanup${NC}"
+    echo -e "     ${TEAL}12)${NC} ${WHITE}Gradle Cache Cleanup${NC}"
     echo ""
     echo -e "${PINK}${BOLD}  🔧 System Tools${NC}"
-    echo -e "     ${TEAL}11)${NC} ${WHITE}Network Connection Check${NC}"
-    echo -e "     ${TEAL}12)${NC} ${WHITE}DNS Nameserver IPv4 Lookup${NC}"
-    echo -e "     ${TEAL}13)${NC} ${WHITE}Port Usage Killer${NC}"
-    echo -e "     ${TEAL}14)${NC} ${WHITE}Busy Build Simulator${NC}"
+    echo -e "     ${TEAL}13)${NC} ${WHITE}Network Connection Check${NC}"
+    echo -e "     ${TEAL}14)${NC} ${WHITE}DNS Nameserver IPv4 Lookup${NC}"
+    echo -e "     ${TEAL}15)${NC} ${WHITE}Port Usage Killer${NC}"
+    echo -e "     ${TEAL}16)${NC} ${WHITE}Busy Build Simulator${NC}"
+    echo -e "     ${TEAL}17)${NC} ${WHITE}Log File Cleanup${NC}"
+    echo -e "     ${TEAL}18)${NC} ${WHITE}Disk Usage Analyzer${NC}"
+    echo -e "     ${TEAL}19)${NC} ${WHITE}Package Outdated Checker${NC}"
+    echo -e "     ${TEAL}20)${NC} ${WHITE}SSL Certificate Checker${NC}"
     echo ""
     echo -e "${YELLOW}${BOLD}  ⚡ Quick Actions${NC}"
     echo -e "     ${TEAL}a)${NC} ${WHITE}Clean All Caches${NC}"
@@ -183,53 +189,70 @@ clean_all() {
     
     # Homebrew
     if command -v brew &> /dev/null; then
-        echo -e "\n${YELLOW}[1/8] Cleaning Homebrew...${NC}"
+        echo -e "\n${YELLOW}[1/10] Cleaning Homebrew...${NC}"
         brew cleanup -s 2>/dev/null || true
     fi
     
     # pip
     if command -v pip3 &> /dev/null; then
-        echo -e "\n${YELLOW}[2/8] Cleaning pip...${NC}"
+        echo -e "\n${YELLOW}[2/10] Cleaning pip...${NC}"
         pip3 cache purge 2>/dev/null || true
     fi
     
     # npm
     if command -v npm &> /dev/null; then
-        echo -e "\n${YELLOW}[3/8] Cleaning npm...${NC}"
+        echo -e "\n${YELLOW}[3/10] Cleaning npm...${NC}"
         npm cache clean --force 2>/dev/null || true
     fi
     
     # pnpm
     if command -v pnpm &> /dev/null; then
-        echo -e "\n${YELLOW}[4/8] Cleaning pnpm...${NC}"
+        echo -e "\n${YELLOW}[4/10] Cleaning pnpm...${NC}"
         pnpm store prune 2>/dev/null || true
     fi
     
     # yarn
     if command -v yarn &> /dev/null; then
-        echo -e "\n${YELLOW}[5/8] Cleaning yarn...${NC}"
+        echo -e "\n${YELLOW}[5/10] Cleaning yarn...${NC}"
         yarn cache clean 2>/dev/null || true
     fi
     
     # Go
     if command -v go &> /dev/null; then
-        echo -e "\n${YELLOW}[6/8] Cleaning Go...${NC}"
+        echo -e "\n${YELLOW}[6/10] Cleaning Go...${NC}"
         go clean -cache 2>/dev/null || true
     fi
     
     # Cargo
     if command -v cargo &> /dev/null; then
-        echo -e "\n${YELLOW}[7/8] Cleaning Cargo...${NC}"
+        echo -e "\n${YELLOW}[7/10] Cleaning Cargo...${NC}"
         CARGO_REGISTRY="$HOME/.cargo/registry"
         rm -rf "$CARGO_REGISTRY/cache"/* 2>/dev/null || true
         rm -rf "$CARGO_REGISTRY/src"/* 2>/dev/null || true
     fi
-    
+
+    # Maven
+    M2_SNAP="$HOME/.m2/repository"
+    if [ -d "$M2_SNAP" ]; then
+        echo -e "\n${YELLOW}[8/10] Cleaning Maven snapshots...${NC}"
+        find "$M2_SNAP" -name "_remote.repositories" -delete 2>/dev/null || true
+        find "$M2_SNAP" -name "*.lastUpdated" -delete 2>/dev/null || true
+        find "$M2_SNAP" -name "*.part" -delete 2>/dev/null || true
+    fi
+
+    # Gradle
+    GRADLE_HOME="${GRADLE_USER_HOME:-$HOME/.gradle}"
+    if [ -d "$GRADLE_HOME" ]; then
+        echo -e "\n${YELLOW}[9/10] Cleaning Gradle build cache...${NC}"
+        rm -rf "$GRADLE_HOME"/caches/build-cache-* 2>/dev/null || true
+        find "$GRADLE_HOME/daemon" -name "*.log" -delete 2>/dev/null || true
+    fi
+
     # Xcode DerivedData (macOS only)
     if [[ "$(uname -s)" == "Darwin" ]]; then
         DERIVED_DATA="$HOME/Library/Developer/Xcode/DerivedData"
         if [ -d "$DERIVED_DATA" ]; then
-            echo -e "\n${YELLOW}[8/8] Cleaning Xcode DerivedData...${NC}"
+            echo -e "\n${YELLOW}[10/10] Cleaning Xcode DerivedData...${NC}"
             rm -rf "$DERIVED_DATA"/* 2>/dev/null || true
         fi
     fi
@@ -258,10 +281,16 @@ show_help() {
     echo -e "  ${CYAN}tool go${NC}           Clean Go cache"
     echo -e "  ${CYAN}tool cargo${NC}        Clean Cargo cache"
     echo -e "  ${CYAN}tool gem${NC}          Clean Ruby Gems cache"
+    echo -e "  ${CYAN}tool maven${NC}        Clean Maven local repository"
+    echo -e "  ${CYAN}tool gradle${NC}       Clean Gradle cache"
     echo -e "  ${CYAN}tool network${NC}      Network connection check"
     echo -e "  ${CYAN}tool dns <domain>${NC} Lookup domain nameserver IPv4"
     echo -e "  ${CYAN}tool port [port]${NC}  Port usage killer"
     echo -e "  ${CYAN}tool busy [seconds]${NC} Fake busy compile/build logs"
+    echo -e "  ${CYAN}tool logs${NC}         Clean log files"
+    echo -e "  ${CYAN}tool disk${NC}         Analyze disk usage"
+    echo -e "  ${CYAN}tool outdated${NC}     Check outdated packages"
+    echo -e "  ${CYAN}tool ssl <domain>${NC} Check SSL certificate"
     echo -e "  ${CYAN}tool all${NC}          Clean all caches"
     echo -e "  ${CYAN}tool help${NC}         Show help"
     echo ""
@@ -305,6 +334,12 @@ cli_mode() {
         gem|ruby)
             bash "$TOOL_DIR/clean_gem_cache.sh"
             ;;
+        maven|mvn)
+            bash "$TOOL_DIR/clean_maven_cache.sh"
+            ;;
+        gradle)
+            bash "$TOOL_DIR/clean_gradle_cache.sh"
+            ;;
         network|net)
             bash "$TOOL_DIR/check_network.sh"
             ;;
@@ -315,6 +350,19 @@ cli_mode() {
         busy|fakebuild|work)
             shift
             bash "$TOOL_DIR/fake_busy_build.sh" "$@"
+            ;;
+        logs|log)
+            bash "$TOOL_DIR/clean_logs.sh"
+            ;;
+        disk)
+            bash "$TOOL_DIR/disk_usage.sh"
+            ;;
+        outdated|update|updates)
+            bash "$TOOL_DIR/pkg_outdated.sh"
+            ;;
+        ssl)
+            shift
+            bash "$TOOL_DIR/ssl_check.sh" "$@"
             ;;
         all)
             clean_all
@@ -334,9 +382,15 @@ cli_mode() {
             echo "  go        Clean Go cache"
             echo "  cargo     Clean Cargo cache"
             echo "  gem       Clean Ruby Gems cache"
+            echo "  maven     Clean Maven local repository"
+            echo "  gradle    Clean Gradle cache"
             echo "  network   Network connection check"
             echo "  port      Port usage killer"
             echo "  busy      Fake busy compile/build logs"
+            echo "  logs      Clean log files"
+            echo "  disk      Analyze disk usage"
+            echo "  outdated  Check outdated packages"
+            echo "  ssl       Check SSL certificate"
             echo "  all       Clean all caches"
             echo "  help      Show help"
             echo ""
@@ -393,9 +447,15 @@ interactive_mode() {
                 run_script "clean_appletv_cache.sh"
                 ;;
             11)
-                run_script "check_network.sh"
+                run_script "clean_maven_cache.sh"
                 ;;
             12)
+                run_script "clean_gradle_cache.sh"
+                ;;
+            13)
+                run_script "check_network.sh"
+                ;;
+            14)
                 echo ""
                 read -p "Enter domain to lookup (leave empty to input interactively): " domain
                 echo ""
@@ -407,7 +467,7 @@ interactive_mode() {
                 echo ""
                 read -p "Press Enter to return to menu..."
                 ;;
-            13)
+            15)
                 echo ""
                 read -p "Enter port number (or press Enter for interactive mode): " port
                 if [ -n "$port" ]; then
@@ -418,13 +478,34 @@ interactive_mode() {
                 echo ""
                 read -p "Press Enter to return to menu..."
                 ;;
-            14)
+            16)
                 echo ""
                 read -p "How many seconds to simulate? (default 45): " secs
                 if [ -n "$secs" ]; then
                     bash "$TOOL_DIR/fake_busy_build.sh" build "$secs"
                 else
                     bash "$TOOL_DIR/fake_busy_build.sh"
+                fi
+                echo ""
+                read -p "Press Enter to return to menu..."
+                ;;
+            17)
+                run_script "clean_logs.sh"
+                ;;
+            18)
+                run_script "disk_usage.sh"
+                ;;
+            19)
+                run_script "pkg_outdated.sh"
+                ;;
+            20)
+                echo ""
+                read -p "Enter domain(s) to check (e.g. github.com example.com:8443): " domains
+                echo ""
+                if [ -n "$domains" ]; then
+                    bash "$TOOL_DIR/ssl_check.sh" $domains
+                else
+                    bash "$TOOL_DIR/ssl_check.sh"
                 fi
                 echo ""
                 read -p "Press Enter to return to menu..."

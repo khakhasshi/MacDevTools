@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.2.0] - 2026-03-15
+### Added
+- Maven local repository cleaner (`tool maven` / `clean_maven_cache.sh`): removes SNAPSHOT artifacts, stale metadata, incomplete downloads, and optionally old JARs.
+- Gradle cache cleaner (`tool gradle` / `clean_gradle_cache.sh`): removes build cache, old versioned caches, daemon logs, old wrapper distributions, and project `.gradle` dirs.
+- Log file cleanup tool (`tool logs` / `clean_logs.sh`): cleans app logs, crash reports, iOS Simulator logs, `/var/log` rotated entries, and dev-tool log directories.
+- Disk usage analyzer (`tool disk` / `disk_usage.sh`): shows full disk overview, home directory breakdown, top-20 largest files, developer cache hotspots, and Downloads summary.
+- Package outdated checker (`tool outdated` / `pkg_outdated.sh`): summarizes outdated packages across Homebrew, pip, npm, pnpm, yarn, gem, cargo, Go, and macOS software updates.
+- SSL certificate checker (`tool ssl <domain>` / `ssl_check.sh`): shows subject, issuer, SANs, expiry countdown, TLS version, and chain verification for one or more domains.
+
+### Changed
+- TUI menu expanded to 20 items (items 11-12 are Maven/Gradle; original system tools renumbered 13-16; new tools at 17-20).
+- `clean_all` function updated to include Maven and Gradle (now 10 steps).
+- Version label updated to v1.2.0.
+- Documentation updated.
+
 ## [1.1.0] - 2026-02-20
 ### Added
 - Steam download cache cleaner (`tool steam`).

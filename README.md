@@ -11,7 +11,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/platform-macOS-blue?style=flat-square&logo=apple" alt="Platform">
   <img src="https://img.shields.io/badge/shell-bash-green?style=flat-square&logo=gnu-bash" alt="Shell">
-  <img src="https://img.shields.io/badge/version-1.1.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.2.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/license-MIT-purple?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square" alt="PRs Welcome">
 </p>
@@ -61,9 +61,15 @@
 | 💎 | Ruby Gems | Clean gem cache, old versions |
 | 🎮 | Steam | Clean Steam download/app/http cache |
 | 📺 | Apple TV | Clean Apple TV app caches/download cache |
+| 🪶 | Maven | Clean ~/.m2 local repository, stale metadata |
+| 🐘 | Gradle | Clean build cache, daemon logs, wrapper dists |
 | 🌐 | DNS Lookup | Resolve domain nameserver IPv4 |
 | 🌐 | Network | Network diagnostics, DNS check |
 | 🔌 | Port | Port usage viewer & process manager |
+| 📋 | Log Cleanup | Clean app/system/crash/sim log files |
+| 💾 | Disk Usage | Analyze disk hotspots & largest files |
+| 📦 | Outdated | Check outdated packages across all managers |
+| 🔐 | SSL Check | Inspect SSL cert expiry, SANs, TLS version |
 
 ## 🚀 Installation
 
@@ -114,7 +120,7 @@ Launch to see a beautiful TUI interface, use number keys to select functions:
   /_/  /_/\__,_/\___/_____/\___/|___//_/  \____/\____/_/____/  
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              🛠️  Terminal Toolkit v1.1  |  macOS
+              🛠️  Terminal Toolkit v1.2  |  macOS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   📦 Cache Cleanup
@@ -140,6 +146,8 @@ tool appletv       # Clean Apple TV cache
 tool go            # Clean Go module cache
 tool cargo         # Clean Cargo cache
 tool gem           # Clean Ruby Gems cache
+tool maven         # Clean Maven local repository
+tool gradle        # Clean Gradle cache
 tool dns example.com  # Lookup domain NS IPv4
 
 # System Tools
@@ -148,6 +156,10 @@ tool port 3000     # View port 3000 usage
 tool port -k 8080  # Kill process using port 8080
 tool port -l       # List all listening ports
 tool port -c       # Check common dev ports
+tool logs          # Clean log files
+tool disk          # Analyze disk usage
+tool outdated      # Check outdated packages
+tool ssl github.com  # Check SSL certificate
 
 # Quick Actions
 tool all           # One-click clean all caches
@@ -350,6 +362,101 @@ tool port [options] [port]
 - ✅ Support force terminate
 - ✅ Quick check common ports
 
+### 11. Maven Local Repository Cleanup (`clean_maven_cache.sh`)
+
+```bash
+tool maven
+```
+
+**Features:**
+- ✅ Remove all `-SNAPSHOT` artifacts
+- ✅ Delete stale `_remote.repositories` and `*.lastUpdated` metadata
+- ✅ Remove zero-byte / incomplete downloads
+- ✅ Optional: delete artifacts not accessed in >90 days
+- ✅ Optional: clean old Maven wrapper distributions
+
+---
+
+### 12. Gradle Cache Cleanup (`clean_gradle_cache.sh`)
+
+```bash
+tool gradle
+```
+
+**Features:**
+- ✅ Remove Gradle build cache
+- ✅ Delete old versioned module caches
+- ✅ Remove daemon logs and registry files
+- ✅ Optional: delete JAR artifacts unused >60 days
+- ✅ Optional: clean old wrapper distribution zips
+- ✅ Optional: clean project-level `.gradle` directories
+
+---
+
+### 13. Log File Cleanup (`clean_logs.sh`)
+
+```bash
+tool logs
+```
+
+**Features:**
+- ✅ Clean app logs in `~/Library/Logs` (>7 days old)
+- ✅ Delete crash reports and diagnostic `.ips` files
+- ✅ Clean iOS Simulator logs
+- ✅ Remove rotated/compressed `/var/log` entries
+- ✅ Clean developer tool log directories (npm, pip, yarn, Gradle)
+
+---
+
+### 14. Disk Usage Analyzer (`disk_usage.sh`)
+
+```bash
+tool disk
+```
+
+**Features:**
+- ✅ Show overall disk usage for all mounted volumes
+- ✅ Break down home directory by subdirectory size
+- ✅ Find top 20 largest files in `~`
+- ✅ Report known developer cache hotspots
+- ✅ Show largest files in `/tmp` and `~/Downloads`
+
+---
+
+### 15. Package Outdated Checker (`pkg_outdated.sh`)
+
+```bash
+tool outdated
+```
+
+**Features:**
+- ✅ Check Homebrew formulae and casks
+- ✅ Check pip packages
+- ✅ Check global npm / pnpm / yarn packages
+- ✅ Check Ruby gems
+- ✅ Check cargo-installed binaries (via `cargo-update`)
+- ✅ Check macOS system software updates
+- ✅ Print one-liner update commands in the summary
+
+---
+
+### 16. SSL Certificate Checker (`ssl_check.sh`)
+
+```bash
+tool ssl github.com
+tool ssl github.com example.com:8443
+```
+
+**Features:**
+- ✅ Show certificate subject, issuer, serial, key algorithm
+- ✅ Display all Subject Alternative Names (SANs)
+- ✅ Days-until-expiry with color-coded warnings (<14 / <30 days)
+- ✅ Check negotiated TLS version
+- ✅ Verify certificate chain trust
+- ✅ Accept domain:port syntax; interactive mode with no arguments
+
+---
+
 ## 📁 Directory Structure
 
 ```
@@ -362,14 +469,21 @@ tool port [options] [port]
 ├── clean_docker_cache.sh   # Docker cache cleanup
 ├── clean_go_cache.sh       # Go cache cleanup
 ├── clean_cargo_cache.sh    # Cargo cache cleanup
-├── clean_gem_cache.sh     # Ruby Gems cache cleanup
-├── clean_steam_cache.sh   # Steam download cache cleanup
+├── clean_gem_cache.sh      # Ruby Gems cache cleanup
+├── clean_steam_cache.sh    # Steam download cache cleanup
 ├── clean_appletv_cache.sh  # Apple TV cache cleanup
-├── dns_lookup.sh          # DNS nameserver IPv4 lookup
-├── check_network.sh       # Network connection check
-├── port_killer.sh         # Port killer
-├── README.md              # English documentation
-└── README_CN.md           # Chinese documentation
+├── clean_maven_cache.sh    # Maven local repository cleanup
+├── clean_gradle_cache.sh   # Gradle cache cleanup
+├── clean_logs.sh           # Log file cleanup
+├── disk_usage.sh           # Disk usage analyzer
+├── pkg_outdated.sh         # Package outdated checker
+├── ssl_check.sh            # SSL certificate checker
+├── dns_lookup.sh           # DNS nameserver IPv4 lookup
+├── check_network.sh        # Network connection check
+├── port_killer.sh          # Port killer
+├── fake_busy_build.sh      # Fake busy build simulator
+├── README.md               # English documentation
+└── README_CN.md            # Chinese documentation
 ```
 
 ## 🖼️ Screenshots
@@ -386,7 +500,7 @@ tool port [options] [port]
   /_/  /_/\__,_/\___/_____/\___/|___//_/  \____/\____/_/____/  
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              🛠️  Terminal Toolkit v1.1  |  macOS
+              🛠️  Terminal Toolkit v1.2  |  macOS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   📦 Cache Cleanup
@@ -398,12 +512,20 @@ tool port [options] [port]
      6) Go Cache Cleanup
      7) Cargo Cache Cleanup
      8) Ruby Gems Cache Cleanup
-      9) Steam Download Cache Cleanup
+     9) Steam Download Cache Cleanup
      10) Apple TV Cache Cleanup
+     11) Maven Local Repository Cleanup
+     12) Gradle Cache Cleanup
 
   🔧 System Tools
-     11) Network Connection Check
-     12) DNS Nameserver Lookup
+     13) Network Connection Check
+     14) DNS Nameserver Lookup
+     15) Port Usage Killer
+     16) Busy Build Simulator
+     17) Log File Cleanup
+     18) Disk Usage Analyzer
+     19) Package Outdated Checker
+     20) SSL Certificate Checker
      13) Port Killer
 
   ⚡ Quick Actions

@@ -11,7 +11,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/platform-macOS-blue?style=flat-square&logo=apple" alt="Platform">
   <img src="https://img.shields.io/badge/shell-bash-green?style=flat-square&logo=gnu-bash" alt="Shell">
-  <img src="https://img.shields.io/badge/version-1.1.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/version-1.2.0-orange?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/license-MIT-purple?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square" alt="PRs Welcome">
 </p>
@@ -61,9 +61,15 @@
 | 💎 | Ruby Gems | 清理 gem 缓存、旧版本 |
 | 🎮 | Steam | 清理 Steam 下载 / app / http 缓存 |
 | 📺 | Apple TV | 清理 Apple TV 缓存 / 下载缓存 |
+| 🪶 | Maven | 清理 ~/.m2 本地仓库、过期元数据 |
+| 🐘 | Gradle | 清理构建缓存、Daemon 日志、Wrapper 发行版 |
 | 🌐 | DNS Lookup | 查询域名的 NS IPv4 |
 | 🌐 | Network | 网络连接诊断、DNS 检查 |
 | 🔌 | Port | 端口占用查看与进程管理 |
+| 📋 | 日志清理 | 清理应用/系统/崩溃/模拟器日志文件 |
+| 💾 | 磁盘分析 | 分析磁盘占用热点与最大文件 |
+| 📦 | 过期包检查 | 汇总检查所有包管理器的过期包 |
+| 🔐 | SSL 检查 | 检查证书到期时间、SAN、TLS 版本 |
 
 ## 🚀 安装
 
@@ -140,6 +146,8 @@ tool appletv       # 清理 Apple TV 缓存
 tool go            # 清理 Go 模块缓存
 tool cargo         # 清理 Cargo 缓存
 tool gem           # 清理 Ruby Gems 缓存
+tool maven         # 清理 Maven 本地仓库
+tool gradle        # 清理 Gradle 缓存
 tool dns example.com  # 查询域名 NS IPv4
 
 # 系统工具
@@ -148,6 +156,10 @@ tool port 3000     # 查看 3000 端口占用
 tool port -k 8080  # 杀死占用 8080 端口的进程
 tool port -l       # 列出所有监听端口
 tool port -c       # 检查常用开发端口
+tool logs          # 清理日志文件
+tool disk          # 分析磁盘占用
+tool outdated      # 检查各包管理器的过期包
+tool ssl github.com  # 检查 SSL 证书
 
 # 快捷操作
 tool all           # 一键清理所有缓存
