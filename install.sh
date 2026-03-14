@@ -2,15 +2,31 @@
 
 # MacDevTools Installation Script
 
-# Detect platform
-PLATFORM="$(uname -s)"
+set -e
 
-# Default install paths
-if [[ "$PLATFORM" == "Darwin" ]]; then
-    PREFIX="${PREFIX:-/usr/local}"
-else
-    # Linux: try /usr/local first (works for most distros)
-    PREFIX="${PREFIX:-/usr/local}"
+# Detect kernel/architecture
+KERNEL_NAME="$(uname -s)"
+ARCH_NAME="$(uname -m)"
+
+# Default install prefix by kernel/arch (can still be overridden by env)
+if [[ -z "${PREFIX:-}" ]]; then
+    case "$KERNEL_NAME" in
+        Darwin)
+            # Apple Silicon commonly uses /opt/homebrew, Intel uses /usr/local.
+            if [[ "$ARCH_NAME" == "arm64" ]] && [[ -d "/opt/homebrew" ]]; then
+                PREFIX="/opt/homebrew"
+            else
+                PREFIX="/usr/local"
+            fi
+            ;;
+        Linux)
+            PREFIX="/usr/local"
+            ;;
+        *)
+            echo "Warning: unsupported kernel '$KERNEL_NAME', fallback to /usr/local"
+            PREFIX="/usr/local"
+            ;;
+    esac
 fi
 
 BINDIR="${BINDIR:-$PREFIX/bin}"
@@ -22,10 +38,10 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 echo "Installing MacDevTools..."
-if [[ "$PLATFORM" == "Darwin" ]]; then
-    echo "Platform: macOS"
+if [[ "$KERNEL_NAME" == "Darwin" ]]; then
+    echo "Platform: macOS ($ARCH_NAME)"
 else
-    echo "Platform: Linux ($PLATFORM)"
+    echo "Platform: $KERNEL_NAME ($ARCH_NAME)"
 fi
 echo "  BINDIR  = $BINDIR"
 echo "  LIBDIR  = $LIBDIR"
@@ -47,10 +63,9 @@ install_files() {
 
 install_files "$LIBDIR" 2>/dev/null || { sudo cp clean_*.sh check_network.sh port_killer.sh dns_lookup.sh "$LIBDIR/"; sudo chmod +x "$LIBDIR"/*.sh; }
 
-# Patch TOOL_DIR in the launcher
+# Install launcher (tool resolves script dir dynamically at runtime)
 TOOL_LAUNCHER="$BINDIR/tool"
-sed "s|TOOL_DIR=\"\$HOME/ShellTools\"|TOOL_DIR=\"$LIBDIR\"|g" tool > "$TOOL_LAUNCHER" 2>/dev/null || \
-    { sudo bash -c "sed 's|TOOL_DIR=\"\$HOME/ShellTools\"|TOOL_DIR=\"$LIBDIR\"|g' tool > \"$TOOL_LAUNCHER\""; }
+cp tool "$TOOL_LAUNCHER" 2>/dev/null || sudo cp tool "$TOOL_LAUNCHER"
 
 # Set permissions
 chmod +x "$TOOL_LAUNCHER" 2>/dev/null || sudo chmod +x "$TOOL_LAUNCHER"
@@ -58,7 +73,7 @@ chmod +x "$TOOL_LAUNCHER" 2>/dev/null || sudo chmod +x "$TOOL_LAUNCHER"
 echo -e "${GREEN}✓ MacDevTools installed successfully!${NC}"
 echo ""
 echo "Run 'tool' to start."
-if [[ "$PLATFORM" != "Darwin" ]]; then
+if [[ "$KERNEL_NAME" != "Darwin" ]]; then
     echo ""
     echo "💡 If '$BINDIR' is not in your PATH, add this to ~/.bashrc or ~/.profile:"
     echo "   export PATH=\"$BINDIR:\$PATH\""

@@ -117,7 +117,7 @@ echo "🌍 Internet Connection:"
 # Ping test
 PING_TARGETS=("8.8.8.8" "1.1.1.1" "223.5.5.5")
 PING_NAMES=("Google DNS" "Cloudflare" "Alibaba DNS")
-nnfor i in "${!PING_TARGETS[@]}"; do
+for i in "${!PING_TARGETS[@]}"; do
     target="${PING_TARGETS[$i]}"
     name="${PING_NAMES[$i]}"
     if ping -c 1 -W 3 "$target" &> /dev/null; then
