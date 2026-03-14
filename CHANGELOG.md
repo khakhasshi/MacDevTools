@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.3.0] - 2026-03-15
+### Added
+- UI language switching in `tool` with English/中文/日本語 support.
+- Interactive language selector in menu (`g`) and CLI command `tool lang [en|zh|ja]`.
+- Language preference persistence via `~/.macdevtools_lang`.
+
+### Changed
+- Default UI language is now English.
+- Menu/header/help/prompt texts in `tool` are localized while keeping script execution flow unchanged.
+
 ## [1.2.0] - 2026-03-15
 ### Added
 - Maven local repository cleaner (`tool maven` / `clean_maven_cache.sh`): removes SNAPSHOT artifacts, stale metadata, incomplete downloads, and optionally old JARs.

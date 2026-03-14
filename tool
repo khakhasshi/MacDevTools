@@ -38,6 +38,240 @@ TOOL_DIR="$(find_scripts_dir "$TOOL_DIR")"
 # Platform detection
 PLATFORM="$(uname -s)"   # Darwin | Linux
 
+# UI language (default: English)
+LANG_CONFIG_FILE="${HOME}/.macdevtools_lang"
+LANG_UI="en"
+if [ -f "$LANG_CONFIG_FILE" ]; then
+    saved_lang="$(tr -d '[:space:]' < "$LANG_CONFIG_FILE" 2>/dev/null || true)"
+    case "$saved_lang" in
+        en|zh|ja) LANG_UI="$saved_lang" ;;
+    esac
+fi
+
+# i18n helper
+t() {
+    local key="$1"
+    case "$LANG_UI:$key" in
+        en:app_title) echo "Terminal Toolkit" ;;
+        zh:app_title) echo "终端工具集" ;;
+        ja:app_title) echo "ターミナルツールキット" ;;
+
+        en:subtitle) echo "System Maintenance & Dev Utilities" ;;
+        zh:subtitle) echo "系统维护与开发工具" ;;
+        ja:subtitle) echo "システム保守と開発ユーティリティ" ;;
+
+        en:category_cache) echo "📦 Cache Cleanup" ;;
+        zh:category_cache) echo "📦 缓存清理" ;;
+        ja:category_cache) echo "📦 キャッシュクリーンアップ" ;;
+
+        en:category_system) echo "🔧 System Tools" ;;
+        zh:category_system) echo "🔧 系统工具" ;;
+        ja:category_system) echo "🔧 システムツール" ;;
+
+        en:category_quick) echo "⚡ Quick Actions" ;;
+        zh:category_quick) echo "⚡ 快捷操作" ;;
+        ja:category_quick) echo "⚡ クイック操作" ;;
+
+        en:menu_help) echo "Help" ;;
+        zh:menu_help) echo "帮助" ;;
+        ja:menu_help) echo "ヘルプ" ;;
+
+        en:menu_quit) echo "Quit" ;;
+        zh:menu_quit) echo "退出" ;;
+        ja:menu_quit) echo "終了" ;;
+
+        en:menu_language) echo "Language" ;;
+        zh:menu_language) echo "语言" ;;
+        ja:menu_language) echo "言語" ;;
+
+        en:lang_status) echo "Language" ;;
+        zh:lang_status) echo "当前语言" ;;
+        ja:lang_status) echo "現在の言語" ;;
+
+        en:lang_en) echo "English" ;;
+        zh:lang_en) echo "英语" ;;
+        ja:lang_en) echo "英語" ;;
+
+        en:lang_zh) echo "中文" ;;
+        zh:lang_zh) echo "中文" ;;
+        ja:lang_zh) echo "中国語" ;;
+
+        en:lang_ja) echo "日本語" ;;
+        zh:lang_ja) echo "日语" ;;
+        ja:lang_ja) echo "日本語" ;;
+
+        en:prompt_select) echo "Select option" ;;
+        zh:prompt_select) echo "请选择" ;;
+        ja:prompt_select) echo "選択してください" ;;
+
+        en:prompt_press_enter) echo "Press Enter to return to menu..." ;;
+        zh:prompt_press_enter) echo "按回车返回菜单..." ;;
+        ja:prompt_press_enter) echo "Enterキーでメニューに戻る..." ;;
+
+        en:running) echo "Running" ;;
+        zh:running) echo "执行中" ;;
+        ja:running) echo "実行中" ;;
+
+        en:done) echo "Done" ;;
+        zh:done) echo "完成" ;;
+        ja:done) echo "完了" ;;
+
+        en:script_not_found) echo "Script not found" ;;
+        zh:script_not_found) echo "脚本不存在" ;;
+        ja:script_not_found) echo "スクリプトが見つかりません" ;;
+
+        en:invalid_option) echo "Invalid option" ;;
+        zh:invalid_option) echo "无效选项" ;;
+        ja:invalid_option) echo "無効な選択です" ;;
+
+        en:goodbye) echo "Goodbye! 👋" ;;
+        zh:goodbye) echo "再见！👋" ;;
+        ja:goodbye) echo "さようなら！👋" ;;
+
+        en:unknown_command) echo "Unknown command" ;;
+        zh:unknown_command) echo "未知命令" ;;
+        ja:unknown_command) echo "不明なコマンド" ;;
+
+        en:run_help_tip) echo "Run 'tool help' for usage" ;;
+        zh:run_help_tip) echo "运行 'tool help' 查看用法" ;;
+        ja:run_help_tip) echo "使い方は 'tool help' を実行してください" ;;
+
+        en:language_title) echo "UI Language" ;;
+        zh:language_title) echo "界面语言" ;;
+        ja:language_title) echo "UI言語" ;;
+
+        en:language_changed) echo "Language switched" ;;
+        zh:language_changed) echo "语言已切换" ;;
+        ja:language_changed) echo "言語を切り替えました" ;;
+
+        en:language_invalid) echo "Invalid language choice" ;;
+        zh:language_invalid) echo "语言选项无效" ;;
+        ja:language_invalid) echo "言語の選択が無効です" ;;
+
+        en:help_usage) echo "Usage" ;;
+        zh:help_usage) echo "用法" ;;
+        ja:help_usage) echo "使い方" ;;
+
+        en:help_menu_tip) echo "Run 'tool' without arguments for interactive menu" ;;
+        zh:help_menu_tip) echo "不带参数运行 'tool' 可进入交互菜单" ;;
+        ja:help_menu_tip) echo "引数なしで 'tool' を実行すると対話メニューを開きます" ;;
+
+        en:menu_item_1) echo "Homebrew Cache Cleanup" ;;
+        zh:menu_item_1) echo "Homebrew 缓存清理" ;;
+        ja:menu_item_1) echo "Homebrew キャッシュクリーンアップ" ;;
+        en:menu_item_2) echo "pip Cache Cleanup" ;;
+        zh:menu_item_2) echo "pip 缓存清理" ;;
+        ja:menu_item_2) echo "pip キャッシュクリーンアップ" ;;
+        en:menu_item_3) echo "npm/pnpm/yarn Cache Cleanup" ;;
+        zh:menu_item_3) echo "npm/pnpm/yarn 缓存清理" ;;
+        ja:menu_item_3) echo "npm/pnpm/yarn キャッシュクリーンアップ" ;;
+        en:menu_item_4) echo "Xcode Cache Cleanup" ;;
+        zh:menu_item_4) echo "Xcode 缓存清理" ;;
+        ja:menu_item_4) echo "Xcode キャッシュクリーンアップ" ;;
+        en:menu_item_5) echo "Docker Cache Cleanup" ;;
+        zh:menu_item_5) echo "Docker 缓存清理" ;;
+        ja:menu_item_5) echo "Docker キャッシュクリーンアップ" ;;
+        en:menu_item_6) echo "Go Module Cache Cleanup" ;;
+        zh:menu_item_6) echo "Go 模块缓存清理" ;;
+        ja:menu_item_6) echo "Go モジュールキャッシュクリーンアップ" ;;
+        en:menu_item_7) echo "Cargo (Rust) Cache Cleanup" ;;
+        zh:menu_item_7) echo "Cargo (Rust) 缓存清理" ;;
+        ja:menu_item_7) echo "Cargo (Rust) キャッシュクリーンアップ" ;;
+        en:menu_item_8) echo "Ruby Gems Cache Cleanup" ;;
+        zh:menu_item_8) echo "Ruby Gems 缓存清理" ;;
+        ja:menu_item_8) echo "Ruby Gems キャッシュクリーンアップ" ;;
+        en:menu_item_9) echo "Steam Download Cache Cleanup" ;;
+        zh:menu_item_9) echo "Steam 下载缓存清理" ;;
+        ja:menu_item_9) echo "Steam ダウンロードキャッシュクリーンアップ" ;;
+        en:menu_item_10) echo "Apple TV Cache Cleanup" ;;
+        zh:menu_item_10) echo "Apple TV 缓存清理" ;;
+        ja:menu_item_10) echo "Apple TV キャッシュクリーンアップ" ;;
+        en:menu_item_11) echo "Maven Local Repository Cleanup" ;;
+        zh:menu_item_11) echo "Maven 本地仓库清理" ;;
+        ja:menu_item_11) echo "Maven ローカルリポジトリクリーンアップ" ;;
+        en:menu_item_12) echo "Gradle Cache Cleanup" ;;
+        zh:menu_item_12) echo "Gradle 缓存清理" ;;
+        ja:menu_item_12) echo "Gradle キャッシュクリーンアップ" ;;
+        en:menu_item_13) echo "Network Connection Check" ;;
+        zh:menu_item_13) echo "网络连接检查" ;;
+        ja:menu_item_13) echo "ネットワーク接続チェック" ;;
+        en:menu_item_14) echo "DNS Nameserver IPv4 Lookup" ;;
+        zh:menu_item_14) echo "DNS NS IPv4 查询" ;;
+        ja:menu_item_14) echo "DNS NS IPv4 ルックアップ" ;;
+        en:menu_item_15) echo "Port Usage Killer" ;;
+        zh:menu_item_15) echo "端口占用查杀" ;;
+        ja:menu_item_15) echo "ポート使用プロセス終了" ;;
+        en:menu_item_16) echo "Busy Build Simulator" ;;
+        zh:menu_item_16) echo "繁忙构建模拟器" ;;
+        ja:menu_item_16) echo "ビジービルドシミュレーター" ;;
+        en:menu_item_17) echo "Log File Cleanup" ;;
+        zh:menu_item_17) echo "日志文件清理" ;;
+        ja:menu_item_17) echo "ログファイルクリーンアップ" ;;
+        en:menu_item_18) echo "Disk Usage Analyzer" ;;
+        zh:menu_item_18) echo "磁盘占用分析" ;;
+        ja:menu_item_18) echo "ディスク使用量分析" ;;
+        en:menu_item_19) echo "Package Outdated Checker" ;;
+        zh:menu_item_19) echo "过期包检查" ;;
+        ja:menu_item_19) echo "古いパッケージ確認" ;;
+        en:menu_item_20) echo "SSL Certificate Checker" ;;
+        zh:menu_item_20) echo "SSL 证书检查" ;;
+        ja:menu_item_20) echo "SSL 証明書チェック" ;;
+        en:menu_item_21) echo "Traceroute (Formatted + Latency Spike Marking)" ;;
+        zh:menu_item_21) echo "Traceroute（格式化+延迟异常跳标注）" ;;
+        ja:menu_item_21) echo "Traceroute（整形表示+遅延スパイク表示）" ;;
+        en:menu_item_22) echo "Wi-Fi Details" ;;
+        zh:menu_item_22) echo "Wi-Fi 详情" ;;
+        ja:menu_item_22) echo "Wi-Fi 詳細" ;;
+        en:menu_item_23) echo "System Information Summary" ;;
+        zh:menu_item_23) echo "系统信息总览" ;;
+        ja:menu_item_23) echo "システム情報サマリー" ;;
+        en:menu_item_24) echo "Top Processes (CPU/Memory)" ;;
+        zh:menu_item_24) echo "进程排行（CPU/内存）" ;;
+        ja:menu_item_24) echo "上位プロセス（CPU/メモリ）" ;;
+        en:menu_action_all) echo "Clean All Caches" ;;
+        zh:menu_action_all) echo "清理所有缓存" ;;
+        ja:menu_action_all) echo "全キャッシュをクリーン" ;;
+        en:menu_action_ports) echo "List All Listening Ports" ;;
+        zh:menu_action_ports) echo "列出全部监听端口" ;;
+        ja:menu_action_ports) echo "リッスン中ポート一覧" ;;
+        en:menu_action_common_ports) echo "Check Common Ports" ;;
+        zh:menu_action_common_ports) echo "检查常用端口" ;;
+        ja:menu_action_common_ports) echo "よく使うポートを確認" ;;
+
+        *) echo "$key" ;;
+    esac
+}
+
+show_current_lang() {
+    case "$LANG_UI" in
+        en) echo "English" ;;
+        zh) echo "中文" ;;
+        ja) echo "日本語" ;;
+        *) echo "English" ;;
+    esac
+}
+
+set_language() {
+    echo ""
+    echo -e "${BOLD}$(t language_title)${NC}"
+    echo "  1) English"
+    echo "  2) 中文"
+    echo "  3) 日本語"
+    echo ""
+    read -p "Select [1-3]: " lang_choice
+    case "$lang_choice" in
+        1|en|EN|En|e|E) LANG_UI="en" ;;
+        2|zh|ZH|Zh|z|Z|cn|CN|Cn) LANG_UI="zh" ;;
+        3|ja|JA|Ja|j|J|jp|JP|Jp) LANG_UI="ja" ;;
+        *)
+            echo -e "${RED}✗ $(t language_invalid)${NC}"
+            return
+            ;;
+    esac
+    printf "%s\n" "$LANG_UI" > "$LANG_CONFIG_FILE" 2>/dev/null || true
+    echo -e "${GREEN}✓ $(t language_changed): $(show_current_lang)${NC}"
+}
+
 # Color definitions
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -101,10 +335,12 @@ show_logo() {
 
     echo -e "${GRAY}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     if [[ "$PLATFORM" == "Darwin" ]]; then
-        echo -e "${WHITE}${BOLD}              🛠️  Terminal Toolkit v1.2  |  macOS${NC}"
+        echo -e "${WHITE}${BOLD}              🛠️  $(t app_title) v1.3  |  macOS${NC}"
     else
-        echo -e "${WHITE}${BOLD}              🛠️  Terminal Toolkit v1.2  |  Linux${NC}"
+        echo -e "${WHITE}${BOLD}              🛠️  $(t app_title) v1.3  |  Linux${NC}"
     fi
+    echo -e "${GRAY}              $(t subtitle)${NC}"
+    echo -e "${GRAY}              $(t lang_status): $(show_current_lang)${NC}"
     echo -e "${GRAY}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     echo ""
 }
@@ -116,41 +352,42 @@ show_menu() {
         macos_tag=" ${GRAY}(macOS only)${NC}"
     fi
 
-    echo -e "${ORANGE}${BOLD}  📦 Cache Cleanup${NC}"
-    echo -e "     ${TEAL}1)${NC} ${WHITE}Homebrew Cache Cleanup${NC}"
-    echo -e "     ${TEAL}2)${NC} ${WHITE}pip Cache Cleanup${NC}"
-    echo -e "     ${TEAL}3)${NC} ${WHITE}npm/pnpm/yarn Cache Cleanup${NC}"
-    echo -e "     ${TEAL}4)${NC} ${WHITE}Xcode Cache Cleanup${macos_tag}"
-    echo -e "     ${TEAL}5)${NC} ${WHITE}Docker Cache Cleanup${NC}"
-    echo -e "     ${TEAL}6)${NC} ${WHITE}Go Module Cache Cleanup${NC}"
-    echo -e "     ${TEAL}7)${NC} ${WHITE}Cargo (Rust) Cache Cleanup${NC}"
-    echo -e "     ${TEAL}8)${NC} ${WHITE}Ruby Gems Cache Cleanup${NC}"
-    echo -e "     ${TEAL}9)${NC} ${WHITE}Steam Download Cache Cleanup${NC}"
-    echo -e "     ${TEAL}10)${NC} ${WHITE}Apple TV Cache Cleanup${macos_tag}"
-    echo -e "     ${TEAL}11)${NC} ${WHITE}Maven Local Repository Cleanup${NC}"
-    echo -e "     ${TEAL}12)${NC} ${WHITE}Gradle Cache Cleanup${NC}"
+    echo -e "${ORANGE}${BOLD}  $(t category_cache)${NC}"
+    echo -e "     ${TEAL}1)${NC} ${WHITE}$(t menu_item_1)${NC}"
+    echo -e "     ${TEAL}2)${NC} ${WHITE}$(t menu_item_2)${NC}"
+    echo -e "     ${TEAL}3)${NC} ${WHITE}$(t menu_item_3)${NC}"
+    echo -e "     ${TEAL}4)${NC} ${WHITE}$(t menu_item_4)${macos_tag}"
+    echo -e "     ${TEAL}5)${NC} ${WHITE}$(t menu_item_5)${NC}"
+    echo -e "     ${TEAL}6)${NC} ${WHITE}$(t menu_item_6)${NC}"
+    echo -e "     ${TEAL}7)${NC} ${WHITE}$(t menu_item_7)${NC}"
+    echo -e "     ${TEAL}8)${NC} ${WHITE}$(t menu_item_8)${NC}"
+    echo -e "     ${TEAL}9)${NC} ${WHITE}$(t menu_item_9)${NC}"
+    echo -e "     ${TEAL}10)${NC} ${WHITE}$(t menu_item_10)${macos_tag}"
+    echo -e "     ${TEAL}11)${NC} ${WHITE}$(t menu_item_11)${NC}"
+    echo -e "     ${TEAL}12)${NC} ${WHITE}$(t menu_item_12)${NC}"
     echo ""
-    echo -e "${PINK}${BOLD}  🔧 System Tools${NC}"
-    echo -e "     ${TEAL}13)${NC} ${WHITE}Network Connection Check${NC}"
-    echo -e "     ${TEAL}14)${NC} ${WHITE}DNS Nameserver IPv4 Lookup${NC}"
-    echo -e "     ${TEAL}15)${NC} ${WHITE}Port Usage Killer${NC}"
-    echo -e "     ${TEAL}16)${NC} ${WHITE}Busy Build Simulator${NC}"
-    echo -e "     ${TEAL}17)${NC} ${WHITE}Log File Cleanup${NC}"
-    echo -e "     ${TEAL}18)${NC} ${WHITE}Disk Usage Analyzer${NC}"
-    echo -e "     ${TEAL}19)${NC} ${WHITE}Package Outdated Checker${NC}"
-    echo -e "     ${TEAL}20)${NC} ${WHITE}SSL Certificate Checker${NC}"
-    echo -e "     ${TEAL}21)${NC} ${WHITE}Traceroute (Formatted + Latency Spike Marking)${NC}"
-    echo -e "     ${TEAL}22)${NC} ${WHITE}Wi-Fi Details${macos_tag}"
-    echo -e "     ${TEAL}23)${NC} ${WHITE}System Information Summary${NC}"
-    echo -e "     ${TEAL}24)${NC} ${WHITE}Top Processes (CPU/Memory)${NC}"
+    echo -e "${PINK}${BOLD}  $(t category_system)${NC}"
+    echo -e "     ${TEAL}13)${NC} ${WHITE}$(t menu_item_13)${NC}"
+    echo -e "     ${TEAL}14)${NC} ${WHITE}$(t menu_item_14)${NC}"
+    echo -e "     ${TEAL}15)${NC} ${WHITE}$(t menu_item_15)${NC}"
+    echo -e "     ${TEAL}16)${NC} ${WHITE}$(t menu_item_16)${NC}"
+    echo -e "     ${TEAL}17)${NC} ${WHITE}$(t menu_item_17)${NC}"
+    echo -e "     ${TEAL}18)${NC} ${WHITE}$(t menu_item_18)${NC}"
+    echo -e "     ${TEAL}19)${NC} ${WHITE}$(t menu_item_19)${NC}"
+    echo -e "     ${TEAL}20)${NC} ${WHITE}$(t menu_item_20)${NC}"
+    echo -e "     ${TEAL}21)${NC} ${WHITE}$(t menu_item_21)${NC}"
+    echo -e "     ${TEAL}22)${NC} ${WHITE}$(t menu_item_22)${macos_tag}"
+    echo -e "     ${TEAL}23)${NC} ${WHITE}$(t menu_item_23)${NC}"
+    echo -e "     ${TEAL}24)${NC} ${WHITE}$(t menu_item_24)${NC}"
     echo ""
-    echo -e "${YELLOW}${BOLD}  ⚡ Quick Actions${NC}"
-    echo -e "     ${TEAL}a)${NC} ${WHITE}Clean All Caches${NC}"
-    echo -e "     ${TEAL}l)${NC} ${WHITE}List All Listening Ports${NC}"
-    echo -e "     ${TEAL}c)${NC} ${WHITE}Check Common Ports${NC}"
+    echo -e "${YELLOW}${BOLD}  $(t category_quick)${NC}"
+    echo -e "     ${TEAL}a)${NC} ${WHITE}$(t menu_action_all)${NC}"
+    echo -e "     ${TEAL}l)${NC} ${WHITE}$(t menu_action_ports)${NC}"
+    echo -e "     ${TEAL}c)${NC} ${WHITE}$(t menu_action_common_ports)${NC}"
+    echo -e "     ${TEAL}g)${NC} ${WHITE}$(t menu_language)${NC}"
     echo ""
     echo -e "${GRAY}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "     ${TEAL}h)${NC} ${WHITE}Help${NC}    ${TEAL}q)${NC} ${WHITE}Quit${NC}"
+    echo -e "     ${TEAL}h)${NC} ${WHITE}$(t menu_help)${NC}    ${TEAL}q)${NC} ${WHITE}$(t menu_quit)${NC}"
     echo -e "${GRAY}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     echo ""
 }
@@ -162,23 +399,23 @@ run_script() {
     
     if [ -f "$script_path" ]; then
         echo ""
-        echo -e "${CYAN}▶ Running $script${NC}"
+        echo -e "${CYAN}▶ $(t running) $script${NC}"
         echo ""
         bash "$script_path"
         echo ""
-        echo -e "${GREEN}✓ Done${NC}"
+        echo -e "${GREEN}✓ $(t done)${NC}"
     else
-        echo -e "${RED}✗ Script not found: $script_path${NC}"
+        echo -e "${RED}✗ $(t script_not_found): $script_path${NC}"
     fi
     
     echo ""
-    read -p "Press Enter to return to menu..."
+    read -p "$(t prompt_press_enter)"
 }
 
 # Clean all caches
 clean_all() {
     echo ""
-    echo -e "${YELLOW}⚠️  About to clean all caches, this may take some time${NC}"
+    echo -e "${YELLOW}⚠️  $(t menu_action_all), this may take some time${NC}"
     echo ""
     read -p "Continue? (y/N): " -n 1 -r
     echo
@@ -263,16 +500,16 @@ clean_all() {
     
     echo ""
     echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${GREEN}✓ All caches cleaned!${NC}"
+    echo -e "${GREEN}✓ $(t menu_action_all)!${NC}"
     echo ""
-    read -p "Press Enter to return to menu..."
+    read -p "$(t prompt_press_enter)"
 }
 
 # Show help
 show_help() {
     clear_screen
     show_logo
-    echo -e "${WHITE}Usage${NC}"
+    echo -e "${WHITE}$(t help_usage)${NC}"
     echo ""
     echo -e "  ${CYAN}tool${NC}              Launch interactive menu"
     echo -e "  ${CYAN}tool brew${NC}         Clean Homebrew cache"
@@ -302,7 +539,7 @@ show_help() {
     echo -e "  ${CYAN}tool all${NC}          Clean all caches"
     echo -e "  ${CYAN}tool help${NC}         Show help"
     echo ""
-    read -p "Press Enter to return to menu..."
+    read -p "$(t prompt_press_enter)"
 }
 
 # CLI mode
@@ -391,9 +628,9 @@ cli_mode() {
             ;;
         help|-h|--help)
             echo ""
-            echo "MacDevTools - Terminal Toolkit"
+            echo "MacDevTools - $(t app_title)"
             echo ""
-            echo "Usage: tool [command] [args]"
+            echo "$(t help_usage): tool [command] [args]"
             echo ""
             echo "Commands:"
             echo "  brew      Clean Homebrew cache"
@@ -417,15 +654,29 @@ cli_mode() {
             echo "  wifi      Show current Wi-Fi details (macOS only)"
             echo "  sysinfo   Show CPU/memory/disk/GPU/OS/battery summary"
             echo "  topproc   Show top CPU/memory processes"
+            echo "  lang      Switch UI language: en|zh|ja"
             echo "  all       Clean all caches"
             echo "  help      Show help"
             echo ""
-            echo "Run 'tool' without arguments for interactive menu"
+            echo "$(t help_menu_tip)"
             echo ""
             ;;
+        lang)
+            shift
+            case "$1" in
+                en|zh|ja)
+                    LANG_UI="$1"
+                    printf "%s\n" "$LANG_UI" > "$LANG_CONFIG_FILE" 2>/dev/null || true
+                    echo -e "${GREEN}✓ $(t language_changed): $(show_current_lang)${NC}"
+                    ;;
+                *)
+                    set_language
+                    ;;
+            esac
+            ;;
         *)
-            echo "Unknown command: $1"
-            echo "Run 'tool help' for usage"
+            echo "$(t unknown_command): $1"
+            echo "$(t run_help_tip)"
             exit 1
             ;;
     esac
@@ -438,7 +689,7 @@ interactive_mode() {
         show_logo
         show_menu
         
-        read -p "Select option: " -n 2 choice
+        read -p "$(t prompt_select): " -n 2 choice
         echo ""
         
         case $choice in
@@ -491,7 +742,7 @@ interactive_mode() {
                     bash "$TOOL_DIR/dns_lookup.sh"
                 fi
                 echo ""
-                read -p "Press Enter to return to menu..."
+                read -p "$(t prompt_press_enter)"
                 ;;
             15)
                 echo ""
@@ -502,7 +753,7 @@ interactive_mode() {
                     bash "$TOOL_DIR/port_killer.sh"
                 fi
                 echo ""
-                read -p "Press Enter to return to menu..."
+                read -p "$(t prompt_press_enter)"
                 ;;
             16)
                 echo ""
@@ -513,7 +764,7 @@ interactive_mode() {
                     bash "$TOOL_DIR/fake_busy_build.sh"
                 fi
                 echo ""
-                read -p "Press Enter to return to menu..."
+                read -p "$(t prompt_press_enter)"
                 ;;
             17)
                 run_script "clean_logs.sh"
@@ -534,7 +785,7 @@ interactive_mode() {
                     bash "$TOOL_DIR/ssl_check.sh"
                 fi
                 echo ""
-                read -p "Press Enter to return to menu..."
+                read -p "$(t prompt_press_enter)"
                 ;;
             21)
                 echo ""
@@ -549,7 +800,7 @@ interactive_mode() {
                     bash "$TOOL_DIR/traceroute_wrapper.sh"
                 fi
                 echo ""
-                read -p "Press Enter to return to menu..."
+                read -p "$(t prompt_press_enter)"
                 ;;
             22)
                 run_script "wifi_info.sh"
@@ -577,7 +828,7 @@ interactive_mode() {
 
                 bash "$TOOL_DIR/top_processes.sh" "${topproc_args[@]}"
                 echo ""
-                read -p "Press Enter to return to menu..."
+                read -p "$(t prompt_press_enter)"
                 ;;
             a|A)
                 clean_all
@@ -586,25 +837,30 @@ interactive_mode() {
                 echo ""
                 bash "$TOOL_DIR/port_killer.sh" -l
                 echo ""
-                read -p "Press Enter to return to menu..."
+                read -p "$(t prompt_press_enter)"
                 ;;
             c|C)
                 echo ""
                 bash "$TOOL_DIR/port_killer.sh" -c
                 echo ""
-                read -p "Press Enter to return to menu..."
+                read -p "$(t prompt_press_enter)"
+                ;;
+            g|G)
+                set_language
+                echo ""
+                read -p "$(t prompt_press_enter)"
                 ;;
             h|H)
                 show_help
                 ;;
             q|Q)
                 echo ""
-                echo -e "${GREEN}Goodbye! 👋${NC}"
+                echo -e "${GREEN}$(t goodbye)${NC}"
                 echo ""
                 exit 0
                 ;;
             *)
-                echo -e "${RED}Invalid option${NC}"
+                echo -e "${RED}$(t invalid_option)${NC}"
                 sleep 1
                 ;;
         esac
